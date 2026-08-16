@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Online Fighting Game</title>
+    <title>Online Fighting Game - Team Battle</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -44,6 +44,16 @@
             background: rgba(255,255,255,0.1);
             padding: 3px 8px;
             border-radius: 4px;
+        }
+        .game-info .team-red {
+            background: rgba(255,0,0,0.2);
+            color: #ff6b6b;
+            border: 1px solid rgba(255,0,0,0.3);
+        }
+        .game-info .team-blue {
+            background: rgba(0,100,255,0.2);
+            color: #4facfe;
+            border: 1px solid rgba(0,100,255,0.3);
         }
         .game-info .alive-count {
             background: rgba(107,203,119,0.2);
@@ -180,9 +190,14 @@
             animation: killFade 2.5s ease forwards;
             white-space: nowrap;
         }
-        .kill-msg .killer { color: #6bcb77; font-weight: bold; }
+        .kill-msg .killer { font-weight: bold; }
+        .kill-msg .killer.red { color: #ff6b6b; }
+        .kill-msg .killer.blue { color: #4facfe; }
         .kill-msg .victim { color: #ff6b6b; font-weight: bold; }
         .kill-msg .weapon { color: #ffd93d; }
+        .kill-msg .team-tag { font-size: 8px; padding: 1px 4px; border-radius: 3px; margin: 0 2px; }
+        .kill-msg .team-tag.red { background: rgba(255,0,0,0.2); color: #ff6b6b; }
+        .kill-msg .team-tag.blue { background: rgba(0,100,255,0.2); color: #4facfe; }
         
         @keyframes killFade {
             0% { opacity: 0; transform: translateX(20px); }
@@ -445,6 +460,7 @@
         <div class="game-header">
             <div class="game-info">
                 <span id="roomIdDisplay">🏠 ---</span>
+                <span class="team-red" id="teamDisplay">🔴 Red Team</span>
                 <span class="alive-count" id="playerCount">👥 0/8</span>
                 <span id="killsDisplay">💀 0</span>
                 <span id="deathsDisplay">☠️ 0</span>
@@ -662,6 +678,31 @@
         let isWaitingForRestart = false;
         let localPlayer = null;
         let aliveCount = 0;
+        let localTeam = 'red'; // 'red' or 'blue'
+
+        // ============================================================
+        // TEAM ASSIGNMENT
+        // ============================================================
+        function assignTeam() {
+            const playersList = Object.values(players);
+            const redCount = playersList.filter(p => p.team === 'red').length;
+            const blueCount = playersList.filter(p => p.team === 'blue').length;
+            
+            // Assign to team with fewer players
+            if (redCount <= blueCount) {
+                return 'red';
+            } else {
+                return 'blue';
+            }
+        }
+
+        function getTeamColor(team) {
+            return team === 'red' ? '#ff6b6b' : '#4facfe';
+        }
+
+        function getTeamName(team) {
+            return team === 'red' ? '🔴 Red Team' : '🔵 Blue Team';
+        }
 
         // ============================================================
         // UI FUNCTIONS
@@ -690,12 +731,19 @@
             setTimeout(() => { if (div.parentNode) div.remove(); }, 3000);
         }
 
-        function addKillFeed(killer, victim, weapon) {
+        function addKillFeed(killerName, victimName, weapon, killerTeam) {
             const feed = document.getElementById('killFeed');
             const div = document.createElement('div');
             div.className = 'kill-msg';
             const weaponInfo = WEAPONS[weapon] || WEAPONS.pistol;
-            div.innerHTML = `<span class="killer">${killer}</span> 💀 <span class="victim">${victim}</span> <span class="weapon">${weaponInfo.icon}</span>`;
+            const teamClass = killerTeam === 'red' ? 'red' : 'blue';
+            div.innerHTML = `
+                <span class="killer ${teamClass}">${killerName}</span>
+                <span class="team-tag ${teamClass}">${killerTeam.toUpperCase()}</span>
+                💀 
+                <span class="victim">${victimName}</span>
+                <span class="weapon">${weaponInfo.icon}</span>
+            `;
             feed.appendChild(div);
             setTimeout(() => { if (div.parentNode) div.remove(); }, 3000);
             if (feed.children.length > 5) feed.removeChild(feed.firstChild);
@@ -718,7 +766,8 @@
                 title.textContent = isLocalWinner ? '🏆 YOU WON!' : '💀 GAME OVER';
                 title.className = 'title ' + (isLocalWinner ? 'win' : 'lose');
                 subtitle.textContent = isLocalWinner ? 'Congratulations!' : 'Better luck next time!';
-                winnerInfo.innerHTML = `<span class="name">${winner.name}</span> won the game! 🎉`;
+                const teamColor = winner.team === 'red' ? '🔴' : '🔵';
+                winnerInfo.innerHTML = `<span class="name">${teamColor} ${winner.name}</span> won the game! 🎉`;
                 winnerName.textContent = winner.name;
                 if (isLocalWinner) { createConfetti(); sound.playVictory(); }
                 else { sound.playDeath(); }
@@ -783,9 +832,10 @@
         }
 
         // ============================================================
-        // PLAYER CLASS        // ============================================================
+        // PLAYER CLASS WITH TEAM COLORS
+        // ============================================================
         class Player {
-            constructor(id, name, character, x, y) {
+            constructor(id, name, character, x, y, team) {
                 this.id = id;
                 this.name = name;
                 this.character = character || 'soldier';
@@ -809,7 +859,9 @@
                 this.deaths = 0;
                 this.respawnTimer = 0;
                 this.isDead = false;
-                this.color = '#2d3436';
+                this.team = team || 'red';
+                this.teamColor = getTeamColor(this.team);
+                this.color = this.teamColor;
             }
 
             draw(ctx) {
@@ -818,7 +870,8 @@
                     ctx.fillStyle = '#666';
                     ctx.font = '10px Arial';
                     ctx.textAlign = 'center';
-                    ctx.fillText('💀 Respawn...', this.x, this.y - 25);
+                    const teamLabel = this.team === 'red' ? '🔴' : '🔵';
+                    ctx.fillText(`${teamLabel} Respawn...`, this.x, this.y - 25);
                     ctx.globalAlpha = 1;
                     return;
                 }
@@ -836,28 +889,43 @@
                 ctx.translate(this.x, this.y);
                 if (this.direction === 'left') ctx.scale(-1, 1);
 
-                const bodyColor = this.hitFlash > 0 ? '#ff0000' : this.color;
+                const bodyColor = this.hitFlash > 0 ? '#ff0000' : this.teamColor;
                 ctx.shadowBlur = this.hitFlash > 0 ? 20 : 5;
                 ctx.shadowColor = this.hitFlash > 0 ? '#ff0000' : 'rgba(0,0,0,0.3)';
                 
+                // Body with team color
                 ctx.fillStyle = bodyColor;
                 ctx.fillRect(-12, -4, 24, 22);
-                ctx.fillStyle = this.hitFlash > 0 ? '#ff3333' : '#4a4a4a';
+                
+                // Vest details - darker version of team color
+                const darkColor = this.team === 'red' ? '#cc3333' : '#3366cc';
+                ctx.fillStyle = this.hitFlash > 0 ? '#ff3333' : darkColor;
                 ctx.fillRect(-8, 0, 16, 2);
                 ctx.fillRect(-8, 6, 16, 2);
                 ctx.fillRect(-8, 12, 16, 2);
 
+                // Head
                 ctx.shadowBlur = this.hitFlash > 0 ? 20 : 5;
                 ctx.fillStyle = this.hitFlash > 0 ? '#ff0000' : '#fd79a8';
                 ctx.beginPath();
                 ctx.arc(0, -13, 10, 0, Math.PI * 2);
                 ctx.fill();
+                
+                // Helmet
                 ctx.fillStyle = this.hitFlash > 0 ? '#ff3333' : '#2d3436';
                 ctx.beginPath();
                 ctx.arc(0, -15, 11, 0, Math.PI * 2);
                 ctx.fill();
                 ctx.fillRect(-12, -18, 24, 3);
 
+                // Team emblem on helmet
+                ctx.fillStyle = this.team === 'red' ? '#ff4444' : '#4488ff';
+                ctx.font = '7px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(this.team === 'red' ? 'R' : 'B', 0, -17);
+
+                // Arms
                 ctx.shadowBlur = 5;
                 ctx.fillStyle = this.hitFlash > 0 ? '#ff0000' : '#fd79a8';
                 if (this.isAttacking) {
@@ -872,6 +940,7 @@
                     ctx.fillRect(10, 0, 6, 12);
                 }
 
+                // Gun
                 const weapon = WEAPONS[this.weapon] || WEAPONS.pistol;
                 ctx.shadowBlur = this.isShooting ? 15 : 5;
                 ctx.shadowColor = this.isShooting ? weapon.color : 'rgba(0,0,0,0.3)';
@@ -893,6 +962,7 @@
                     ctx.fill();
                 }
 
+                // Legs
                 ctx.shadowBlur = 5;
                 ctx.fillStyle = '#2d3436';
                 ctx.fillRect(-10, 20, 8, 12);
@@ -904,14 +974,17 @@
                 ctx.shadowBlur = 0;
                 ctx.restore();
 
+                // Name with team color
                 ctx.shadowBlur = 0;
                 ctx.fillStyle = 'rgba(0,0,0,0.6)';
                 ctx.fillRect(x - 3, y - 20, this.width + 6, 12);
                 ctx.fillStyle = this.id === localPlayerId ? '#ffd93d' : '#fff';
                 ctx.font = 'bold 8px Arial';
                 ctx.textAlign = 'center';
-                ctx.fillText(this.name, this.x, y - 10);
+                const teamEmoji = this.team === 'red' ? '🔴' : '🔵';
+                ctx.fillText(`${teamEmoji} ${this.name}`, this.x, y - 10);
 
+                // Combo
                 if (this.comboCount > 1) {
                     ctx.fillStyle = '#ffd93d';
                     ctx.font = 'bold 10px Arial';
@@ -922,6 +995,7 @@
                     ctx.shadowBlur = 0;
                 }
 
+                // Health bar
                 const hw = this.width + 6;
                 const hx = x - 3;
                 const hy = y - 34;
@@ -931,6 +1005,7 @@
                 ctx.fillStyle = hp > 0.5 ? '#6bcb77' : hp > 0.25 ? '#ffd93d' : '#ff6b6b';
                 ctx.fillRect(hx + 1, hy + 1, (hw - 2) * hp, 2);
 
+                // Weapon icon
                 ctx.fillStyle = 'rgba(0,0,0,0.5)';
                 ctx.fillRect(x + this.width / 2 - 7, y - 28, 14, 6);
                 ctx.fillStyle = '#fff';
@@ -950,11 +1025,8 @@
                         this.comboCount = 0;
                         if (this.id === localPlayerId) {
                             showAnnouncement('🔄 Respawned!', 'Back in action!', 'info', 1500);
-                            document.getElementById('eliminatedNotice')?.classList?.remove('show');
                         }
-                        // Update alive count
                         updateAliveCount();
-                        // Check if game should continue
                         const alive = Object.values(players).filter(p => !p.isDead);
                         if (alive.length >= 2 && gameOver) {
                             gameOver = false;
@@ -999,12 +1071,9 @@
                     if (this.id === localPlayerId) {
                         document.getElementById('deathsDisplay').textContent = '☠️ ' + this.deaths;
                     }
-                    // Update alive count
                     updateAliveCount();
-                    // Check if all players are dead
                     const alive = Object.values(players).filter(p => !p.isDead);
                     if (alive.length <= 1 && Object.keys(players).length >= 2) {
-                        // Only show game over if no one respawns within 2 seconds
                         setTimeout(() => {
                             const stillAlive = Object.values(players).filter(p => !p.isDead);
                             if (stillAlive.length <= 1 && Object.keys(players).length >= 2) {
@@ -1087,14 +1156,20 @@
             document.getElementById('roomIdDisplay').textContent = `🏠 ${roomId}`;
             
             data.players.forEach(p => {
-                players[p.id] = new Player(p.id, p.name, p.character, p.x, p.y);
+                // Assign team if not already assigned
+                let team = p.team || 'red';
+                players[p.id] = new Player(p.id, p.name, p.character, p.x, p.y, team);
                 if (p.id === localPlayerId) {
                     localPlayer = players[p.id];
                     localPlayer.x = p.x || 200;
                     localPlayer.y = p.y || 300;
                     localPlayer.weapon = p.weapon || 'pistol';
+                    localPlayer.team = team;
+                    localTeam = team;
                     currentWeapon = localPlayer.weapon;
                     updateWeaponHUD(currentWeapon);
+                    document.getElementById('teamDisplay').textContent = getTeamName(team);
+                    document.getElementById('teamDisplay').className = `team-${team}`;
                     document.getElementById('gameStatus').textContent = '⏳ Waiting...';
                 }
             });
@@ -1102,16 +1177,18 @@
             weaponsOnMap = data.weapons || [];
             playerCount = data.players.length;
             updateAliveCount();
-            showAnnouncement('🎮 Joined!', 'Waiting for players...', 'info', 2000);
+            showAnnouncement('🎮 Joined!', `Team: ${getTeamName(localTeam)}`, 'info', 2000);
         });
 
         socket.on('player-joined', (data) => {
             const p = data.player;
-            players[p.id] = new Player(p.id, p.name, p.character, p.x, p.y);
+            // Assign team to new player
+            const team = assignTeam();
+            players[p.id] = new Player(p.id, p.name, p.character, p.x, p.y, team);
             playerCount = Object.keys(players).length;
             updateAliveCount();
             document.getElementById('gameStatus').textContent = `👤 ${p.name} joined!`;
-            showAnnouncement(`👤 ${p.name} joined!`, `Players: ${playerCount}/${maxPlayers}`, 'info', 2000);
+            showAnnouncement(`👤 ${p.name} joined!`, `Team: ${getTeamName(team)}`, 'info', 2000);
         });
 
         socket.on('game-start', (data) => {
@@ -1134,8 +1211,8 @@
             
             weaponsOnMap = data.weapons || [];
             updateAliveCount();
-            showAnnouncement('⚔️ FIGHT!', 'Game started!', 'info', 2500);
-            showToast('⚔️ FIGHT!', '#ffd93d');
+            showAnnouncement('⚔️ FIGHT!', 'Red vs Blue!', 'info', 2500);
+            showToast('⚔️ FIGHT! Red vs Blue!', '#ffd93d');
         });
 
         socket.on('player-moved', (data) => {
@@ -1184,6 +1261,11 @@
         });
 
         socket.on('player-hit', (data) => {
+            // Don't allow self-damage
+            if (data.attackerId === data.targetId) {
+                return; // Ignore self-hit
+            }
+            
             if (players[data.targetId]) {
                 const target = players[data.targetId];
                 target.takeDamage(data.damage);
@@ -1228,6 +1310,11 @@
         });
 
         socket.on('player-defeated', (data) => {
+            // Don't allow self-kill
+            if (data.winnerId === data.loserId) {
+                return; // Ignore self-kill
+            }
+            
             const winner = players[data.winnerId];
             const loser = players[data.loserId];
             const weapon = winner?.weapon || 'pistol';
@@ -1244,16 +1331,17 @@
                 sound.playDeath();
             }
             
+            // Add to kill feed with team info
             addKillFeed(
                 data.winnerName || winner?.name || 'Someone',
                 data.loserName || loser?.name || 'enemy',
-                weapon
+                weapon,
+                winner?.team || 'red'
             );
             
             if (players[data.loserId]) {
                 players[data.loserId].isDead = true;
                 players[data.loserId].respawnTimer = 60;
-                // Increment deaths for the loser
                 players[data.loserId].deaths = (players[data.loserId].deaths || 0) + 1;
             }
             
@@ -1289,7 +1377,6 @@
                     showAnnouncement('🔄 Respawned!', 'Back in action!', 'info', 1500);
                 }
                 updateAliveCount();
-                // Check if game should continue
                 const alive = Object.values(players).filter(p => !p.isDead);
                 if (alive.length >= 2 && gameOver) {
                     gameOver = false;
@@ -1336,7 +1423,7 @@
             }
             
             updateAliveCount();
-            showAnnouncement('⚔️ New Round!', 'Fight!', 'info', 2000);
+            showAnnouncement('⚔️ New Round!', 'Red vs Blue!', 'info', 2000);
             isWaitingForRestart = false;
         });
 
@@ -1574,6 +1661,7 @@
                 ctx.translate((Math.random() - 0.5) * screenShake * 2, (Math.random() - 0.5) * screenShake * 2);
             }
             
+            // Background
             const grad = ctx.createLinearGradient(0, 0, 0, 600);
             grad.addColorStop(0, '#0a0a1a');
             grad.addColorStop(0.5, '#1a0a2e');
@@ -1581,15 +1669,32 @@
             ctx.fillStyle = grad;
             ctx.fillRect(0, 0, 900, 600);
             
+            // Ground
             ctx.fillStyle = 'rgba(255,255,255,0.03)';
             ctx.fillRect(0, 550, 900, 50);
             
+            // Arena - with team colors
             ctx.strokeStyle = 'rgba(255,255,255,0.05)';
             ctx.lineWidth = 2;
             ctx.beginPath();
             ctx.arc(450, 300, 220, 0, Math.PI * 2);
             ctx.stroke();
             
+            // Team base indicators
+            ctx.fillStyle = 'rgba(255,0,0,0.05)';
+            ctx.fillRect(0, 0, 450, 600);
+            ctx.fillStyle = 'rgba(0,100,255,0.05)';
+            ctx.fillRect(450, 0, 450, 600);
+            
+            // Team labels
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillStyle = 'rgba(255,0,0,0.15)';
+            ctx.fillText('🔴 RED TEAM', 225, 30);
+            ctx.fillStyle = 'rgba(0,100,255,0.15)';
+            ctx.fillText('🔵 BLUE TEAM', 675, 30);
+            
+            // Grid
             ctx.strokeStyle = 'rgba(255,255,255,0.02)';
             ctx.lineWidth = 1;
             for (let i = 0; i < 900; i += 50) {
@@ -1599,6 +1704,7 @@
                 ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(900, i); ctx.stroke();
             }
             
+            // Center line
             ctx.strokeStyle = 'rgba(255,255,255,0.06)';
             ctx.lineWidth = 1;
             ctx.setLineDash([8, 8]);
@@ -1608,6 +1714,7 @@
             ctx.stroke();
             ctx.setLineDash([]);
             
+            // Projectiles
             projectiles.forEach(p => {
                 if (p.trail) {
                     p.trail.forEach((pos, i) => {
@@ -1636,6 +1743,7 @@
             drawWeapons(ctx);
             particles.forEach(p => p.draw(ctx));
             
+            // Sort players by y position (for depth)
             const sorted = Object.values(players).sort((a, b) => a.y - b.y);
             sorted.forEach(p => p.draw(ctx));
             
@@ -1701,12 +1809,13 @@
         resizeCanvas();
         gameLoop();
         
-        console.log('🎮 Game loaded!');
+        console.log('🎮 Team Battle Game Loaded!');
+        console.log('🔴 RED TEAM vs 🔵 BLUE TEAM');
         console.log('⬆⬇⬅➡ Use Arrow Keys to move!');
         console.log('🔫 Press Space to shoot!');
         console.log('📦 Press E to pickup weapons!');
+        console.log('⚔️ You cannot kill yourself!');
         console.log('✅ Soldiers respawn when killed - infinite battle!');
-        console.log('💀 Game only ends when ALL players are dead at the same time!');
     </script>
 </body>
 </html>
