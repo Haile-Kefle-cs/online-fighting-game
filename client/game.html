@@ -1465,7 +1465,6 @@
             const finalDeaths = document.getElementById('finalDeaths');
             const finalScore = document.getElementById('finalScore');
             
-            // Get local player stats
             const localPlayer = players[localPlayerId];
             finalKills.textContent = localPlayer?.kills || 0;
             finalDeaths.textContent = localPlayer?.deaths || 0;
@@ -1507,7 +1506,6 @@
             overlay.classList.add('show');
             document.getElementById('gameStatus').textContent = '🏁 GAME OVER';
             
-            // Start restart countdown
             startRestartCountdown();
         }
 
@@ -1900,7 +1898,7 @@
         // SOCKET EVENTS
         // ============================================================
         socket.on('connect', () => {
-            console.log('Connected');
+            console.log('🟢 Connected to server');
             if (roomId) {
                 const name = localStorage.getItem('playerName') || 'Player';
                 socket.emit('join-room', { roomId, playerName: name, character: 'soldier' });
@@ -1949,13 +1947,20 @@
             showMovementNotification(p.name, 'joined the game', '🎮');
         });
 
+        // ============================================================
+        // GAME START - FIXED
+        // ============================================================
         socket.on('game-start', (data) => {
+            console.log('🎮 GAME STARTING!', data);
+            
             gameStatus = 'playing';
             gameOver = false;
+            
             document.getElementById('gameStatus').textContent = '⚔️ FIGHT!';
             document.getElementById('gameOverOverlay').classList.remove('show');
             document.getElementById('confettiContainer').innerHTML = '';
             
+            // Update all players
             data.players.forEach(p => {
                 if (players[p.id]) {
                     players[p.id].x = p.x;
@@ -1963,10 +1968,21 @@
                     players[p.id].health = p.health;
                     players[p.id].isDead = false;
                     players[p.id].comboCount = 0;
+                    players[p.id].weapon = p.weapon || 'pistol';
+                    players[p.id].score = p.score || 0;
+                    players[p.id].kills = p.kills || 0;
+                    players[p.id].deaths = p.deaths || 0;
                 }
             });
+            
+            // Update weapons
             weaponsOnMap = data.weapons || [];
+            
+            // Show announcement
             showAnnouncement('⚔️ FIGHT!', 'Game started! Good luck!', 'info', 2500);
+            showToast('⚔️ FIGHT! Game started!', '#ffd93d');
+            
+            console.log('✅ Game is now active with ' + Object.keys(players).length + ' players');
         });
 
         socket.on('player-moved', (data) => {
@@ -2131,7 +2147,6 @@
             updateScoreDisplay();
             updateHealthBars();
             
-            // Check game over
             setTimeout(() => {
                 checkGameOver();
             }, 500);
@@ -2176,7 +2191,6 @@
             projectiles = [];
             comboTexts = [];
             
-            // Reset local stats
             if (players[localPlayerId]) {
                 players[localPlayerId].kills = 0;
                 players[localPlayerId].deaths = 0;
@@ -2542,7 +2556,6 @@
             updateHealthBars();
             updateScoreDisplay();
             
-            // Check game over periodically
             if (gameStatus === 'playing' && !gameOver) {
                 checkGameOver();
             }
