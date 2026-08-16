@@ -18,12 +18,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../client')));
 
-// Game state
 const rooms = {};
 const players = {};
 const MAX_PLAYERS = 8;
 
-// Routes
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/index.html'));
 });
@@ -131,7 +129,7 @@ io.on('connection', (socket) => {
     console.log(`✅ Room created: ${roomId} by ${playerName} (${rooms[roomId].maxPlayers} players max)`);
   });
 
-  // Join room - FIXED: Auto-starts game when 2 players join
+  // Join room - FIXED: Allows joining even if game started
   socket.on('join-room', ({ roomId, playerName, character }) => {
     console.log(`🔗 Player ${playerName} attempting to join room ${roomId}`);
     
@@ -145,10 +143,11 @@ io.on('connection', (socket) => {
       return;
     }
     
-    if (rooms[roomId].gameStarted) {
-      socket.emit('error', 'Game already started');
-      return;
-    }
+    // REMOVED: The check for gameStarted - now allows joining even during game
+    // if (rooms[roomId].gameStarted) {
+    //   socket.emit('error', 'Game already started');
+    //   return;
+    // }
     
     if (rooms[roomId].players.includes(socket.id)) {
       return;
@@ -200,8 +199,8 @@ io.on('connection', (socket) => {
     
     console.log(`✅ Player ${playerName} joined room ${roomId} (${rooms[roomId].players.length}/${rooms[roomId].maxPlayers})`);
     
-    // AUTO-START GAME when 2 or more players are in the room
-    if (rooms[roomId].players.length >= 2) {
+    // Auto-start game when 2 or more players
+    if (rooms[roomId].players.length >= 2 && !rooms[roomId].gameStarted) {
       rooms[roomId].gameStarted = true;
       const allPlayers = rooms[roomId].players.map(id => players[id]);
       
@@ -211,8 +210,14 @@ io.on('connection', (socket) => {
         players: allPlayers,
         weapons: rooms[roomId].weapons
       });
-    } else {
-      console.log(`⏳ Waiting for more players in room ${roomId} (${rooms[roomId].players.length}/${rooms[roomId].maxPlayers})`);
+    } else if (rooms[roomId].gameStarted) {
+      // If game already started, send current game state to the new player
+      const allPlayers = rooms[roomId].players.map(id => players[id]);
+      socket.emit('game-start', {
+        players: allPlayers,
+        weapons: rooms[roomId].weapons
+      });
+      console.log(`📤 Sent game state to late joiner ${playerName}`);
     }
   });
 
