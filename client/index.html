@@ -3,60 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Online Fighting Game</title>
+    <title>Online Fighting Game - Team Battle</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0a0a1a, #1a0a2e);
+            background: linear-gradient(135deg, #0a0a1a, #1a0a2e, #0f3460);
             color: #fff;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 10px;
+            padding: 15px;
         }
         .container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1000px;
             padding: 20px;
         }
+        
+        /* Header */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 15px;
+            margin-bottom: 30px;
         }
         h1 {
-            font-size: 2.5em;
-            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcb77);
+            font-size: 2.8em;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcb77, #4facfe);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+        }
+        .header-right {
+            display: flex;
+            gap: 10px;
+            align-items: center;
         }
         .lang-toggle {
             display: flex;
-            gap: 8px;
+            gap: 6px;
         }
         .lang-toggle button {
-            padding: 8px 20px;
-            border: 2px solid rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border: 2px solid rgba(255,255,255,0.15);
             border-radius: 8px;
             background: rgba(255,255,255,0.05);
-            color: #fff;
+            color: #888;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+            transition: all 0.3s;
+            touch-action: manipulation;
+        }
+        .lang-toggle button.active {
+            background: rgba(255,215,0,0.15);
+            border-color: #ffd93d;
+            color: #ffd93d;
+            box-shadow: 0 0 20px rgba(255,215,0,0.1);
+        }
+        .lang-toggle button:active {
+            transform: scale(0.95);
+        }
+        
+        /* How to Play Button */
+        .how-to-play-btn {
+            padding: 8px 20px;
+            background: rgba(79,172,254,0.15);
+            border: 2px solid rgba(79,172,254,0.3);
+            border-radius: 8px;
+            color: #4facfe;
             cursor: pointer;
             font-size: 14px;
             font-weight: bold;
             transition: all 0.3s;
             touch-action: manipulation;
         }
-        .lang-toggle button.active {
-            background: rgba(255,215,0,0.2);
-            border-color: #ffd93d;
-            color: #ffd93d;
+        .how-to-play-btn:hover {
+            background: rgba(79,172,254,0.25);
+            box-shadow: 0 0 30px rgba(79,172,254,0.15);
+            transform: translateY(-2px);
         }
-        .lang-toggle button:active {
+        .how-to-play-btn:active {
             transform: scale(0.95);
         }
         
@@ -73,11 +105,11 @@
         }
         .tab-btn {
             flex: 1;
-            padding: 16px 20px;
-            background: rgba(255,255,255,0.03);
+            padding: 14px 20px;
+            background: rgba(255,255,255,0.02);
             border: none;
-            color: #888;
-            font-size: 16px;
+            color: #666;
+            font-size: 15px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
@@ -86,46 +118,40 @@
             text-align: center;
         }
         .tab-btn:hover {
-            background: rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.06);
             color: #fff;
         }
         .tab-btn.active {
-            background: rgba(255,215,0,0.1);
+            background: rgba(255,215,0,0.08);
             color: #ffd93d;
             box-shadow: inset 0 -3px 0 #ffd93d;
         }
         .tab-btn:active {
             transform: scale(0.97);
         }
-        .tab-btn .icon {
-            font-size: 20px;
-            display: block;
-            margin-bottom: 4px;
-        }
-        .tab-btn .label {
-            font-size: 14px;
-        }
+        .tab-btn .icon { font-size: 18px; display: block; margin-bottom: 3px; }
+        .tab-btn .label { font-size: 13px; }
         .tab-btn .badge {
             position: absolute;
-            top: 8px;
-            right: 12px;
+            top: 6px;
+            right: 10px;
             background: #6bcb77;
             color: #fff;
-            font-size: 10px;
-            padding: 2px 8px;
+            font-size: 9px;
+            padding: 1px 8px;
             border-radius: 10px;
             font-weight: bold;
         }
         
         /* Tab Content */
         .tab-content {
-            background: rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.06);
             backdrop-filter: blur(10px);
             border-radius: 0 0 16px 16px;
-            padding: 25px;
+            padding: 25px 30px;
             border: 1px solid rgba(255,255,255,0.08);
             border-top: none;
-            min-height: 350px;
+            min-height: 320px;
             transition: all 0.3s;
         }
         .tab-pane {
@@ -141,26 +167,31 @@
         }
         
         .tab-pane h2 {
-            margin-bottom: 15px;
+            margin-bottom: 18px;
             color: #ffd93d;
-            font-size: 1.2em;
+            font-size: 1.3em;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
         .tab-pane label {
             display: block;
             color: #aaa;
             font-size: 13px;
-            margin-top: 8px;
+            margin-top: 10px;
             margin-bottom: 4px;
+            font-weight: bold;
+        }
+        .tab-pane label .required {
+            color: #ff6b6b;
+            margin-left: 4px;
         }
         .tab-pane input, .tab-pane select {
             width: 100%;
-            padding: 12px;
+            padding: 12px 14px;
             margin: 4px 0;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.08);
+            border: 2px solid rgba(255,255,255,0.1);
             border-radius: 10px;
             color: #fff;
             font-size: 15px;
@@ -169,9 +200,14 @@
         .tab-pane input:focus, .tab-pane select:focus {
             outline: none;
             border-color: #ffd93d;
-            box-shadow: 0 0 20px rgba(255,215,0,0.1);
+            box-shadow: 0 0 25px rgba(255,215,0,0.08);
+            background: rgba(255,255,255,0.1);
         }
-        .tab-pane input::placeholder { color: rgba(255,255,255,0.4); }
+        .tab-pane input::placeholder { color: rgba(255,255,255,0.3); }
+        .tab-pane input.error {
+            border-color: #ff6b6b;
+            box-shadow: 0 0 25px rgba(255,107,107,0.15);
+        }
         .tab-pane select option { 
             background: #1a0a2e;
             padding: 8px;
@@ -179,7 +215,7 @@
         .tab-pane button {
             width: 100%;
             padding: 14px;
-            margin-top: 8px;
+            margin-top: 10px;
             border: none;
             border-radius: 10px;
             color: #fff;
@@ -192,60 +228,68 @@
         .tab-pane button:active { transform: scale(0.97); }
         .tab-pane button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255,107,107,0.3);
+            box-shadow: 0 6px 25px rgba(255,107,107,0.3);
         }
         .tab-pane button.primary {
             background: linear-gradient(45deg, #ff6b6b, #ee5a24);
         }
         .tab-pane button.primary:hover {
-            box-shadow: 0 6px 20px rgba(255,107,107,0.4);
+            box-shadow: 0 6px 25px rgba(255,107,107,0.4);
         }
         .tab-pane button.secondary {
             background: linear-gradient(45deg, #4facfe, #0f3460);
         }
         .tab-pane button.secondary:hover {
-            box-shadow: 0 6px 20px rgba(79,172,254,0.4);
+            box-shadow: 0 6px 25px rgba(79,172,254,0.4);
         }
         .tab-pane button.success {
             background: linear-gradient(45deg, #6bcb77, #2d7d46);
         }
         .tab-pane button.success:hover {
-            box-shadow: 0 6px 20px rgba(107,203,119,0.4);
-        }
-        .tab-pane button.warning {
-            background: linear-gradient(45deg, #ffd93d, #f9a825);
-            color: #1a1a2e;
-        }
-        .tab-pane button.warning:hover {
-            box-shadow: 0 6px 20px rgba(255,217,61,0.4);
+            box-shadow: 0 6px 25px rgba(107,203,119,0.4);
         }
         .tab-pane button:disabled {
             opacity: 0.5;
             cursor: not-allowed;
             transform: none !important;
+            box-shadow: none !important;
         }
+        
+        .status-msg {
+            margin-top: 10px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: none;
+        }
+        .status-msg.show { display: block; }
+        .status-msg.error { background: rgba(255,0,0,0.15); color: #ff6b6b; border: 1px solid rgba(255,0,0,0.2); }
+        .status-msg.success { background: rgba(0,255,0,0.1); color: #6bcb77; border: 1px solid rgba(0,255,0,0.15); }
+        .status-msg.info { background: rgba(79,172,254,0.15); color: #4facfe; border: 1px solid rgba(79,172,254,0.2); }
+        .status-msg.warning { background: rgba(255,215,0,0.15); color: #ffd93d; border: 1px solid rgba(255,215,0,0.2); }
         
         /* Room Code Display */
         .room-code-container {
             display: none;
             margin-top: 15px;
-            padding: 15px;
-            background: rgba(255,215,0,0.1);
+            padding: 15px 20px;
+            background: rgba(255,215,0,0.08);
             border-radius: 12px;
-            border: 2px solid rgba(255,215,0,0.3);
+            border: 2px solid rgba(255,215,0,0.2);
             animation: slideIn 0.5s ease;
         }
-        .room-code-container.show {
-            display: block;
-        }
+        .room-code-container.show { display: block; }
         @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-20px); }
+            from { opacity: 0; transform: translateY(-15px); }
             to { opacity: 1; transform: translateY(0); }
         }
         .room-code-display {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             justify-content: center;
             flex-wrap: wrap;
         }
@@ -256,138 +300,68 @@
             color: #ffd93d;
             letter-spacing: 4px;
             background: rgba(0,0,0,0.3);
-            padding: 8px 20px;
+            padding: 6px 18px;
             border-radius: 8px;
-            border: 1px solid rgba(255,215,0,0.2);
+            border: 1px solid rgba(255,215,0,0.15);
             user-select: all;
         }
         .room-code-display .copy-btn {
-            padding: 8px 20px;
-            background: rgba(255,215,0,0.2);
-            border: 1px solid rgba(255,215,0,0.3);
+            padding: 6px 18px;
+            background: rgba(255,215,0,0.15);
+            border: 1px solid rgba(255,215,0,0.2);
             border-radius: 8px;
             color: #ffd93d;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
             transition: all 0.3s;
             touch-action: manipulation;
         }
         .room-code-display .copy-btn:hover {
-            background: rgba(255,215,0,0.3);
+            background: rgba(255,215,0,0.25);
             transform: scale(1.05);
         }
-        .room-code-display .copy-btn:active {
-            transform: scale(0.95);
-        }
+        .room-code-display .copy-btn:active { transform: scale(0.95); }
         .room-code-display .copy-btn.copied {
-            background: rgba(107,203,119,0.3);
+            background: rgba(107,203,119,0.2);
             border-color: #6bcb77;
             color: #6bcb77;
         }
         .room-code-display .share-btn {
-            padding: 8px 20px;
-            background: rgba(79,172,254,0.2);
-            border: 1px solid rgba(79,172,254,0.3);
+            padding: 6px 18px;
+            background: rgba(79,172,254,0.15);
+            border: 1px solid rgba(79,172,254,0.2);
             border-radius: 8px;
             color: #4facfe;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
             transition: all 0.3s;
             touch-action: manipulation;
         }
         .room-code-display .share-btn:hover {
-            background: rgba(79,172,254,0.3);
+            background: rgba(79,172,254,0.25);
             transform: scale(1.05);
         }
-        .room-code-display .share-btn:active {
-            transform: scale(0.95);
-        }
+        .room-code-display .share-btn:active { transform: scale(0.95); }
         .room-code-info {
             text-align: center;
-            color: #aaa;
-            font-size: 13px;
-            margin-top: 10px;
-        }
-        .room-code-info strong {
-            color: #ffd93d;
-        }
-        
-        /* Waiting Room */
-        .waiting-room {
-            display: none;
-            margin-top: 15px;
-            padding: 20px;
-            background: rgba(79,172,254,0.1);
-            border-radius: 12px;
-            border: 2px solid rgba(79,172,254,0.3);
-            animation: slideIn 0.5s ease;
-        }
-        .waiting-room.show {
-            display: block;
-        }
-        .waiting-room .players-list {
-            margin: 10px 0;
-            padding: 10px;
-            background: rgba(0,0,0,0.2);
-            border-radius: 8px;
-            min-height: 60px;
-        }
-        .waiting-room .player-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 6px 12px;
-            margin: 4px 0;
-            background: rgba(255,255,255,0.05);
-            border-radius: 6px;
-            animation: fadeSlide 0.3s ease;
-        }
-        .waiting-room .player-item .name {
-            font-weight: bold;
-            color: #fff;
-        }
-        .waiting-room .player-item .status {
+            color: #888;
             font-size: 12px;
-            color: #6bcb77;
+            margin-top: 8px;
         }
-        .waiting-room .player-item .ready {
-            margin-left: auto;
-            color: #6bcb77;
-            font-size: 14px;
-        }
-        .waiting-room .player-item .not-ready {
-            margin-left: auto;
-            color: #ff6b6b;
-            font-size: 14px;
-        }
-        .waiting-room .waiting-status {
-            text-align: center;
-            padding: 10px;
-            color: #aaa;
-            font-size: 14px;
-        }
-        .waiting-room .waiting-status .highlight {
-            color: #ffd93d;
-            font-weight: bold;
-        }
+        .room-code-info strong { color: #ffd93d; }
         
-        /* Room List Styles */
+        /* Room List */
         .room-list-container {
-            max-height: 250px;
+            max-height: 220px;
             overflow-y: auto;
             margin: 10px 0;
             border-radius: 10px;
-            background: rgba(0,0,0,0.2);
+            background: rgba(0,0,0,0.15);
         }
-        .room-list-container::-webkit-scrollbar {
-            width: 4px;
-        }
-        .room-list-container::-webkit-scrollbar-thumb {
-            background: rgba(255,255,255,0.2);
-            border-radius: 2px;
-        }
+        .room-list-container::-webkit-scrollbar { width: 4px; }
+        .room-list-container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
         .room-item {
             display: flex;
             justify-content: space-between;
@@ -396,17 +370,16 @@
             margin: 3px 0;
             background: rgba(255,255,255,0.03);
             border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.06);
-            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.05);
             transition: all 0.2s;
         }
         .room-item:hover {
-            background: rgba(255,255,255,0.08);
-            border-color: rgba(255,215,0,0.2);
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(255,215,0,0.15);
         }
         .room-item .room-info {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             align-items: center;
             flex-wrap: wrap;
             flex: 1;
@@ -418,35 +391,35 @@
             font-size: 14px;
         }
         .room-item .room-players {
-            font-size: 13px;
+            font-size: 12px;
             color: #aaa;
         }
         .room-item .room-status {
-            font-size: 11px;
-            padding: 2px 12px;
-            border-radius: 12px;
+            font-size: 10px;
+            padding: 2px 10px;
+            border-radius: 10px;
             font-weight: bold;
         }
         .room-item .room-status.waiting {
-            background: rgba(107,203,119,0.2);
+            background: rgba(107,203,119,0.15);
             color: #6bcb77;
         }
         .room-item .room-status.playing {
-            background: rgba(255,107,107,0.2);
+            background: rgba(255,107,107,0.15);
             color: #ff6b6b;
         }
         .room-item .room-status.full {
-            background: rgba(255,107,107,0.3);
+            background: rgba(255,107,107,0.2);
             color: #ff6b6b;
         }
         .room-item .join-btn {
-            padding: 5px 18px;
+            padding: 4px 16px;
             background: #6bcb77;
             border: none;
             border-radius: 6px;
             color: #fff;
             cursor: pointer;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: bold;
             touch-action: manipulation;
             transition: all 0.2s;
@@ -455,56 +428,242 @@
             background: #5abf66;
             transform: scale(1.05);
         }
-        .room-item .join-btn:active {
-            transform: scale(0.95);
-        }
+        .room-item .join-btn:active { transform: scale(0.95); }
         .room-item .join-btn:disabled {
             background: #555;
             cursor: not-allowed;
             transform: none;
         }
         
-        .status-msg {
-            margin-top: 10px;
-            padding: 10px;
-            border-radius: 8px;
+        .no-rooms {
             text-align: center;
+            padding: 25px 20px;
+            color: #555;
             font-size: 14px;
-            font-weight: bold;
-            transition: all 0.3s;
         }
-        .status-msg.error { background: rgba(255,0,0,0.15); color: #ff6b6b; }
-        .status-msg.success { background: rgba(0,255,0,0.1); color: #6bcb77; }
-        .status-msg.info { background: rgba(79,172,254,0.15); color: #4facfe; }
-        .status-msg.warning { background: rgba(255,215,0,0.15); color: #ffd93d; }
+        .no-rooms .icon { font-size: 36px; display: block; margin-bottom: 8px; }
         
         .refresh-btn {
             width: 100%;
             padding: 10px;
             margin-top: 8px;
-            background: rgba(79,172,254,0.2);
-            border: 1px solid rgba(79,172,254,0.3);
+            background: rgba(79,172,254,0.1);
+            border: 1px solid rgba(79,172,254,0.2);
             border-radius: 8px;
             color: #4facfe;
             cursor: pointer;
             font-size: 14px;
             font-weight: bold;
             transition: all 0.3s;
+            touch-action: manipulation;
         }
         .refresh-btn:hover {
-            background: rgba(79,172,254,0.3);
+            background: rgba(79,172,254,0.2);
         }
         .refresh-btn:active { transform: scale(0.97); }
         
-        .no-rooms {
-            text-align: center;
-            padding: 30px 20px;
-            color: #666;
-            font-size: 14px;
+        /* ============================================================
+           HOW TO PLAY MODAL
+           ============================================================ */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(10px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
         }
-        .no-rooms .icon { font-size: 40px; display: block; margin-bottom: 10px; }
+        .modal-overlay.show {
+            display: flex;
+            animation: modalFadeIn 0.4s ease;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .modal-content {
+            background: rgba(10,10,30,0.97);
+            border-radius: 20px;
+            border: 2px solid rgba(255,215,0,0.15);
+            max-width: 700px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 30px 35px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+        }
+        .modal-content::-webkit-scrollbar { width: 5px; }
+        .modal-content::-webkit-scrollbar-thumb { background: rgba(255,215,0,0.2); border-radius: 3px; }
         
-        /* Toast notification */
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding-bottom: 15px;
+        }
+        .modal-header h2 {
+            color: #ffd93d;
+            font-size: 1.6em;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .modal-close {
+            background: rgba(255,107,107,0.15);
+            border: 1px solid rgba(255,107,107,0.2);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            color: #ff6b6b;
+            font-size: 22px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            touch-action: manipulation;
+        }
+        .modal-close:hover {
+            background: rgba(255,107,107,0.25);
+            transform: rotate(90deg);
+        }
+        .modal-close:active { transform: scale(0.9) rotate(90deg); }
+        
+        .modal-body {
+            color: #ccc;
+        }
+        .modal-body .section {
+            margin-bottom: 18px;
+        }
+        .modal-body .section h3 {
+            color: #6bcb77;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .modal-body .section h3.blue { color: #4facfe; }
+        .modal-body .section h3.gold { color: #ffd93d; }
+        .modal-body .section h3.red { color: #ff6b6b; }
+        .modal-body .section p {
+            color: #aaa;
+            line-height: 1.7;
+            font-size: 14px;
+            padding-left: 5px;
+        }
+        .modal-body .section ul {
+            list-style: none;
+            padding: 0;
+        }
+        .modal-body .section ul li {
+            padding: 5px 0 5px 28px;
+            position: relative;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #bbb;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+        .modal-body .section ul li:last-child { border-bottom: none; }
+        .modal-body .section ul li::before {
+            content: "▸";
+            position: absolute;
+            left: 5px;
+            color: #ffd93d;
+            font-weight: bold;
+        }
+        .modal-body .section ul li .key {
+            display: inline-block;
+            background: rgba(255,255,255,0.08);
+            padding: 1px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #ffd93d;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .modal-body .section ul li .team-red { color: #ff6b6b; font-weight: bold; }
+        .modal-body .section ul li .team-blue { color: #4facfe; font-weight: bold; }
+        
+        .modal-body .rules-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 10px 0;
+        }
+        .modal-body .rules-grid .rule-item {
+            background: rgba(255,255,255,0.03);
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .modal-body .rules-grid .rule-item:hover {
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(255,215,0,0.1);
+        }
+        .modal-body .rules-grid .rule-item .icon { font-size: 28px; display: block; margin-bottom: 4px; }
+        .modal-body .rules-grid .rule-item .text { font-size: 12px; color: #aaa; }
+        
+        .modal-footer {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        .modal-footer .close-modal-btn {
+            padding: 10px 30px;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            touch-action: manipulation;
+        }
+        .modal-footer .close-modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(255,107,107,0.3);
+        }
+        .modal-footer .close-modal-btn:active { transform: scale(0.97); }
+        
+        /* Footer */
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
+            color: #555;
+            font-size: 13px;
+        }
+        .footer .heart {
+            color: #ff6b6b;
+            display: inline-block;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        .footer .name {
+            color: #ffd93d;
+            font-weight: bold;
+        }
+        
+        /* Toast */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -515,11 +674,11 @@
             padding: 12px 24px;
             border-radius: 10px;
             font-size: 14px;
-            z-index: 1000;
+            z-index: 1001;
             opacity: 0;
             transition: all 0.5s;
             pointer-events: none;
-            border: 1px solid rgba(255,215,0,0.2);
+            border: 1px solid rgba(255,215,0,0.1);
         }
         .toast.show {
             opacity: 1;
@@ -529,104 +688,57 @@
         .toast.error { border-color: #ff6b6b; color: #ff6b6b; }
         .toast.info { border-color: #4facfe; color: #4facfe; }
         
-        /* How to Play */
-        .how-to-play {
-            margin-top: 30px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 16px;
-            padding: 25px;
-            border: 1px solid rgba(255,255,255,0.08);
-        }
-        .how-to-play h2 {
-            color: #ffd93d;
-            margin-bottom: 15px;
-            font-size: 1.3em;
-        }
-        .how-to-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        .how-to-content ul {
-            list-style: none;
-            padding: 0;
-        }
-        .how-to-content ul li {
-            padding: 6px 0;
-            padding-left: 25px;
-            position: relative;
-            font-size: 14px;
-            line-height: 1.6;
-            color: #ccc;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        .how-to-content ul li::before {
-            content: "▸";
-            position: absolute;
-            left: 0;
-            color: #ffd93d;
-        }
-        .how-to-content ul li .key {
-            display: inline-block;
-            background: rgba(255,255,255,0.1);
-            padding: 1px 8px;
-            border-radius: 4px;
-            font-family: monospace;
-            color: #ffd93d;
-            font-size: 12px;
-            font-weight: bold;
-        }
-        
-        .amharic-text { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        .lang-hide { display: none; }
-        
         @media (max-width: 768px) {
-            h1 { font-size: 1.8em; }
-            .how-to-content { grid-template-columns: 1fr; }
-            .tab-btn { padding: 12px 14px; }
+            h1 { font-size: 2em; }
+            .header { flex-direction: column; align-items: stretch; }
+            .header-right { justify-content: center; flex-wrap: wrap; }
+            .tab-btn { padding: 10px 12px; }
             .tab-btn .icon { font-size: 16px; }
-            .tab-btn .label { font-size: 12px; }
-            .tab-content { padding: 18px; }
-            .room-item { flex-wrap: wrap; gap: 8px; }
-            .room-item .room-info { gap: 8px; }
-            .room-code-display .code { font-size: 22px; padding: 6px 14px; }
-            .room-code-display { gap: 10px; }
-            .waiting-room { padding: 15px; }
+            .tab-btn .label { font-size: 11px; }
+            .tab-content { padding: 18px 16px; }
+            .modal-content { padding: 20px; }
+            .modal-header h2 { font-size: 1.3em; }
+            .modal-body .rules-grid { grid-template-columns: 1fr; }
+            .room-code-display .code { font-size: 22px; padding: 4px 12px; letter-spacing: 2px; }
+            .footer { font-size: 11px; }
         }
         @media (max-width: 480px) {
-            h1 { font-size: 1.4em; }
-            .header { flex-direction: column; align-items: stretch; }
-            .lang-toggle { justify-content: center; }
-            .tab-btn { padding: 10px 10px; }
+            h1 { font-size: 1.5em; }
+            .tab-btn { padding: 8px 8px; }
             .tab-btn .icon { font-size: 14px; }
-            .tab-btn .label { font-size: 11px; }
-            .tab-btn .badge { font-size: 8px; top: 4px; right: 6px; padding: 1px 6px; }
-            .tab-content { padding: 14px; }
+            .tab-btn .label { font-size: 10px; }
+            .tab-btn .badge { font-size: 7px; padding: 1px 6px; top: 3px; right: 5px; }
+            .tab-content { padding: 14px 12px; }
+            .tab-pane h2 { font-size: 1.1em; }
             .tab-pane input, .tab-pane select { padding: 10px; font-size: 14px; }
             .tab-pane button { padding: 12px; font-size: 15px; }
-            .room-item { padding: 8px 10px; }
-            .room-item .room-id { font-size: 12px; }
-            .status-msg { font-size: 12px; padding: 8px; }
-            .room-code-display .code { font-size: 18px; padding: 4px 10px; letter-spacing: 2px; }
-            .room-code-display .copy-btn, .room-code-display .share-btn { font-size: 12px; padding: 6px 14px; }
+            .room-item { flex-wrap: wrap; gap: 6px; }
+            .room-item .room-info { gap: 6px; }
+            .modal-content { padding: 15px; }
+            .modal-header h2 { font-size: 1.1em; }
+            .modal-close { width: 34px; height: 34px; font-size: 18px; }
+            .modal-body .section ul li { font-size: 13px; }
+            .room-code-display .code { font-size: 18px; padding: 4px 10px; letter-spacing: 1px; }
             .toast { font-size: 12px; padding: 8px 16px; bottom: 20px; }
-            .waiting-room { padding: 12px; }
-            .waiting-room .player-item { padding: 4px 10px; font-size: 13px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Header -->
         <div class="header">
             <h1>⚔️ Online Fighting Game</h1>
-            <div class="lang-toggle">
-                <button id="langEn" class="active">🇬🇧 English</button>
-                <button id="langAm">🇪🇹 አማርኛ</button>
+            <div class="header-right">
+                <button class="how-to-play-btn" id="howToPlayBtn">📖 How to Play</button>
+                <div class="lang-toggle">
+                    <button id="langEn" class="active">🇬🇧 EN</button>
+                    <button id="langAm">🇪🇹 አማ</button>
+                </div>
             </div>
         </div>
         
         <!-- Tab Navigation -->
-        <div class="tab-navigation" id="tabNav">
+        <div class="tab-navigation">
             <button class="tab-btn active" data-tab="create">
                 <span class="icon">🎮</span>
                 <span class="label" id="createTabLabel">Create Room</span>
@@ -649,8 +761,8 @@
             <!-- Create Room Tab -->
             <div class="tab-pane active" id="tabCreate">
                 <h2 id="createTitle">🎮 Create Room</h2>
-                <label id="nameLabel">Player Name</label>
-                <input type="text" id="playerName" placeholder="Enter your name" value="Player1">
+                <label id="nameLabel">Player Name <span class="required">*</span></label>
+                <input type="text" id="playerName" placeholder="Enter your name">
                 <label id="charLabel">Character</label>
                 <select id="characterSelect">
                     <option value="soldier">🔫 Soldier</option>
@@ -681,29 +793,13 @@
                         <strong id="shareInfo">Share this code with friends to join your game!</strong>
                     </div>
                 </div>
-                
-                <!-- Waiting Room -->
-                <div class="waiting-room" id="waitingRoom">
-                    <h3 style="color:#ffd93d; margin-bottom:10px;">👥 Waiting for Players</h3>
-                    <div class="players-list" id="waitingPlayers">
-                        <div class="waiting-status">⏳ Waiting for players to join...</div>
-                    </div>
-                    <div style="display:flex; gap:10px; margin-top:10px;">
-                        <button id="startGameBtn" class="success" style="flex:1;" disabled>🎯 Start Game (Need 2+ Players)</button>
-                        <button id="cancelRoomBtn" class="error" style="flex:0.5; background:linear-gradient(45deg,#ff6b6b,#c0392b);">❌ Cancel</button>
-                    </div>
-                    <div class="waiting-status" style="margin-top:8px; font-size:12px;">
-                        <span id="playerCountDisplay">👥 1 players joined</span>
-                        <span style="margin-left:15px;" id="readyStatus">⏳ Waiting for more players...</span>
-                    </div>
-                </div>
             </div>
             
             <!-- Join Room Tab -->
             <div class="tab-pane" id="tabJoin">
                 <h2 id="joinTitle">🔗 Join Room</h2>
-                <label id="joinNameLabel">Player Name</label>
-                <input type="text" id="joinPlayerName" placeholder="Enter your name" value="Player2">
+                <label id="joinNameLabel">Player Name <span class="required">*</span></label>
+                <input type="text" id="joinPlayerName" placeholder="Enter your name">
                 <label id="joinCharLabel">Character</label>
                 <select id="characterSelectJoin">
                     <option value="soldier">🔫 Soldier</option>
@@ -711,7 +807,7 @@
                     <option value="wizard">🧙 Wizard</option>
                     <option value="knight">🛡️ Knight</option>
                 </select>
-                <label id="roomSelectLabel">Enter Room Code</label>
+                <label id="roomSelectLabel">Room Code <span class="required">*</span></label>
                 <input type="text" id="roomCodeInput" placeholder="Enter Room Code (e.g., ABC123)" style="text-transform:uppercase;font-family:monospace;font-size:18px;letter-spacing:2px;">
                 <button id="joinRoomBtn" class="secondary">🔗 Join Room</button>
                 <button id="quickJoinBtn" class="success">⚡ Quick Join</button>
@@ -732,56 +828,140 @@
             </div>
         </div>
         
-        <!-- How to Play -->
-        <div class="how-to-play">
-            <h2 id="howTitle">📖 How to Play / እንዴት መጫወት እንደሚቻል</h2>
-            <div class="how-to-content">
-                <div id="howEn">
-                    <h3 style="color:#6bcb77;">🎮 Controls</h3>
-                    <ul>
-                        <li><span class="key">W A S D</span> - Move</li>
-                        <li><span class="key">Space</span> - Shoot</li>
-                        <li><span class="key">J</span> - Light Attack</li>
-                        <li><span class="key">K</span> - Heavy Attack</li>
-                        <li><span class="key">L</span> - Special Attack</li>
-                        <li><span class="key">E</span> - Pickup Weapon</li>
-                        <li>👆 Click/Tap on screen to aim & shoot</li>
-                    </ul>
-                    <h3 style="color:#ffd93d; margin-top:10px;">🎯 Tips</h3>
-                    <ul>
-                        <li>🔫 Pick up special weapons from the map</li>
-                        <li>💪 Build combos for bonus damage</li>
-                        <li>🏆 Up to 8 players can join!</li>
-                        <li>📱 Mobile: Use on-screen buttons</li>
-                        <li>📋 Copy room code to invite friends!</li>
-                    </ul>
-                </div>
-                <div id="howAm" class="amharic-text" style="display:none;">
-                    <h3 style="color:#6bcb77;">🎮 መቆጣጠሪያዎች</h3>
-                    <ul>
-                        <li><span class="key">W A S D</span> - መንቀሳቀስ</li>
-                        <li><span class="key">Space</span> - መተኮስ</li>
-                        <li><span class="key">J</span> - ቀላል ጥቃት</li>
-                        <li><span class="key">K</span> - ከባድ ጥቃት</li>
-                        <li><span class="key">L</span> - ልዩ ጥቃት</li>
-                        <li><span class="key">E</span> - መሳሪያ ማንሳት</li>
-                        <li>👆 ለመተኮስ ስክሪኑን ይጫኑ</li>
-                    </ul>
-                    <h3 style="color:#ffd93d; margin-top:10px;">🎯 ምክሮች</h3>
-                    <ul>
-                        <li>🔫 ልዩ መሳሪያዎችን ከመሬት ላይ ይምረጡ</li>
-                        <li>💪 ለተጨማሪ ጉዳት ኮምቦዎችን ይገንቡ</li>
-                        <li>🏆 እስከ 8 ተጫዋቾች መጫወት ይችላሉ!</li>
-                        <li>📱 በሞባይል ላይ የስክሪን ቁልፎችን ይጠቀሙ</li>
-                        <li>📋 ጓደኞችን ለመጋበዝ የክፍል ኮዱን ይቅዱ!</li>
-                    </ul>
-                </div>
-            </div>
+        <!-- Footer -->
+        <div class="footer">
+            <span>Developed with <span class="heart">❤️</span> by <span class="name">Haile</span> © 2026</span>
         </div>
     </div>
     
     <!-- Toast Notification -->
     <div class="toast" id="toast"></div>
+    
+    <!-- ============================================================
+    HOW TO PLAY MODAL
+    ============================================================ -->
+    <div class="modal-overlay" id="howToPlayModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📖 How to Play</h2>
+                <button class="modal-close" id="modalCloseBtn">✕</button>
+            </div>
+            <div class="modal-body">
+                <!-- English Version -->
+                <div id="modalEn">
+                    <div class="section">
+                        <h3>🎯 Game Objective</h3>
+                        <p>Eliminate all enemy players and be the last soldier standing! Work with your team to defeat the opposing team.</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="blue">🎮 Controls</h3>
+                        <ul>
+                            <li><span class="key">⬆ ⬇ ⬅ ➡</span> or <span class="key">W A S D</span> - Move your soldier</li>
+                            <li><span class="key">Space</span> or <span class="key">Click</span> - Shoot your weapon</li>
+                            <li><span class="key">J</span> - Light Attack (melee)</li>
+                            <li><span class="key">K</span> - Heavy Attack (melee)</li>
+                            <li><span class="key">L</span> - Special Attack</li>
+                            <li><span class="key">E</span> - Pickup weapon from the ground</li>
+                            <li><span class="key">Tap/Click</span> on screen to aim and shoot</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="gold">🔫 Weapons</h3>
+                        <ul>
+                            <li><span class="key">🔫 Pistol</span> - Starting weapon, balanced damage</li>
+                            <li><span class="key">🔫 Rifle</span> - Medium damage, good range</li>
+                            <li><span class="key">💥 Shotgun</span> - High damage, short range</li>
+                            <li><span class="key">🎯 Sniper</span> - Very high damage, long range</li>
+                            <li><span class="key">🚀 Rocket</span> - Massive damage, explosive</li>
+                            <li><span class="key">⚡ Laser</span> - Fast fire rate, consistent damage</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="red">👥 Teams</h3>
+                        <ul>
+                            <li><span class="team-red">🔴 Red Team</span> - Fight for the red side</li>
+                            <li><span class="team-blue">🔵 Blue Team</span> - Fight for the blue side</li>
+                            <li>Teams are automatically balanced when players join</li>
+                            <li>You cannot damage your own team members</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="gold">💡 Tips & Strategy</h3>
+                        <ul>
+                            <li>💪 Build combos by hitting enemies consecutively for bonus damage</li>
+                            <li>🔫 Pick up weapons from the map for better firepower</li>
+                            <li>🛡️ Use melee attacks when enemies are close</li>
+                            <li>🎯 Aim carefully with sniper and rocket launcher</li>
+                            <li>👥 Stick with your team for better survival</li>
+                            <li>📱 Mobile users: Use the on-screen touch controls</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Amharic Version -->
+                <div id="modalAm" style="display:none;">
+                    <div class="section">
+                        <h3>🎯 የጨዋታ ዓላማ</h3>
+                        <p>ሁሉንም የተቃዋሚ ተጫዋቾች ያስወግዱ እና የመጨረሻው ወታደር ይሁኑ! ከቡድንዎ ጋር በመሆን የተቃዋሚ ቡድንን ያሸንፉ።</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="blue">🎮 መቆጣጠሪያዎች</h3>
+                        <ul>
+                            <li><span class="key">⬆ ⬇ ⬅ ➡</span> ወይም <span class="key">W A S D</span> - መንቀሳቀስ</li>
+                            <li><span class="key">Space</span> ወይም <span class="key">መጫን</span> - መተኮስ</li>
+                            <li><span class="key">J</span> - ቀላል ጥቃት</li>
+                            <li><span class="key">K</span> - ከባድ ጥቃት</li>
+                            <li><span class="key">L</span> - ልዩ ጥቃት</li>
+                            <li><span class="key">E</span> - መሳሪያ ማንሳት</li>
+                            <li>ስክሪኑን መጫን - ማነጣጠር እና መተኮስ</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="gold">🔫 መሳሪያዎች</h3>
+                        <ul>
+                            <li><span class="key">🔫 ፒስቶል</span> - መነሻ መሳሪያ</li>
+                            <li><span class="key">🔫 ራይፍል</span> - መካከለኛ ጉዳት</li>
+                            <li><span class="key">💥 ሾትገን</span> - ከፍተኛ ጉዳት</li>
+                            <li><span class="key">🎯 ስናይፐር</span> - ከፍተኛ ጉዳት</li>
+                            <li><span class="key">🚀 ሮኬት</span> - ግዙፍ ጉዳት</li>
+                            <li><span class="key">⚡ ሌዘር</span> - ፈጣን መተኮስ</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="red">👥 ቡድኖች</h3>
+                        <ul>
+                            <li><span class="team-red">🔴 ቀይ ቡድን</span> - ለቀይ ቡድን ይዋጉ</li>
+                            <li><span class="team-blue">🔵 ሰማያዊ ቡድን</span> - ለሰማያዊ ቡድን ይዋጉ</li>
+                            <li>ቡድኖች በራስ-ሰር ይመደባሉ</li>
+                            <li>የራስዎን ቡድን ማጥቃት አይችሉም</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="gold">💡 ምክሮች</h3>
+                        <ul>
+                            <li>💪 ለተጨማሪ ጉዳት ኮምቦዎችን ይገንቡ</li>
+                            <li>🔫 መሳሪያዎችን ከመሬት ላይ ይምረጡ</li>
+                            <li>🛡️ ተቃዋሚዎች ሲቃረቡ የጥቃት ቁልፎችን ይጠቀሙ</li>
+                            <li>🎯 በስናይፐር እና ሮኬት በጥንቃቄ ያነጣጥሩ</li>
+                            <li>👥 ለተሻለ ህልውና ከቡድንዎ ጋር ይቆዩ</li>
+                            <li>📱 በሞባይል ላይ የስክሪን ቁልፎችን ይጠቀሙ</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="close-modal-btn" id="modalCloseBtn2">✅ Got it!</button>
+            </div>
+        </div>
+    </div>
     
     <script src="/socket.io/socket.io.js"></script>
     <script>
@@ -790,9 +970,122 @@
         let currentTab = 'create';
         let roomsData = [];
         let currentRoomCode = '';
-        let isRoomCreator = false;
-        let waitingPlayers = [];
-        let myRoomId = null;
+        
+        // ============================================================
+        // LANGUAGE TOGGLE
+        // ============================================================
+        document.getElementById('langEn').addEventListener('click', () => {
+            document.getElementById('langEn').classList.add('active');
+            document.getElementById('langAm').classList.remove('active');
+            document.getElementById('modalEn').style.display = 'block';
+            document.getElementById('modalAm').style.display = 'none';
+            currentLang = 'en';
+            updateMenuText('en');
+        });
+        
+        document.getElementById('langAm').addEventListener('click', () => {
+            document.getElementById('langAm').classList.add('active');
+            document.getElementById('langEn').classList.remove('active');
+            document.getElementById('modalEn').style.display = 'none';
+            document.getElementById('modalAm').style.display = 'block';
+            currentLang = 'am';
+            updateMenuText('am');
+        });
+        
+        function updateMenuText(lang) {
+            const t = lang === 'am' ? {
+                createTab: 'ክፍል ፍጠር',
+                joinTab: 'ክፍል ተቀላቀል',
+                roomsTab: 'ክፍሎች',
+                create: '🎮 ክፍል ፍጠር',
+                join: '🔗 ክፍል ተቀላቀል',
+                rooms: '📋 የሚገኙ ክፍሎች',
+                name: 'የተጫዋች ስም *',
+                char: 'ገጸ ባህሪ',
+                max: 'ከፍተኛ ተጫዋቾች',
+                joinName: 'የተጫዋች ስም *',
+                joinChar: 'ገጸ ባህሪ',
+                roomLabel: 'የክፍል ኮድ *',
+                createBtn: '🚀 ክፍል ፍጠር',
+                joinBtn: '🔗 ክፍል ተቀላቀል',
+                quickJoin: '⚡ ፈጣን መቀላቀል',
+                refresh: '🔄 አድስ',
+                noRooms: 'ምንም ክፍሎች የሉም። አዲስ ይፍጠሩ!',
+                placeholder: 'ስምዎን ያስገቡ',
+                codePlaceholder: 'የክፍል ኮድ ያስገቡ (ለምሳሌ ABC123)',
+                shareInfo: 'ከጓደኞች ጋር ይጋሩ!',
+                copyBtn: '📋 ቅዳ',
+                shareBtn: '📤 አጋራ',
+                status: {
+                    creating: '⏳ ክፍል እየተፈጠረ...',
+                    created: '✅ ክፍል ተፈጠረ: ',
+                    joining: '⏳ እየተቀላቀለ...',
+                    joined: '✅ ተቀላቀለ: ',
+                    error: '❌ ስህተት: ',
+                    noRooms: '❌ ምንም የሚገኝ ክፍል የለም',
+                    nameRequired: '❌ እባክዎ ስምዎን ያስገቡ',
+                    codeRequired: '❌ እባክዎ የክፍል ኮድ ያስገቡ'
+                }
+            } : {
+                createTab: 'Create Room',
+                joinTab: 'Join Room',
+                roomsTab: 'Rooms',
+                create: '🎮 Create Room',
+                join: '🔗 Join Room',
+                rooms: '📋 Available Rooms',
+                name: 'Player Name *',
+                char: 'Character',
+                max: 'Max Players',
+                joinName: 'Player Name *',
+                joinChar: 'Character',
+                roomLabel: 'Room Code *',
+                createBtn: '🚀 Create Room',
+                joinBtn: '🔗 Join Room',
+                quickJoin: '⚡ Quick Join',
+                refresh: '🔄 Refresh Rooms',
+                noRooms: 'No rooms available. Create one!',
+                placeholder: 'Enter your name',
+                codePlaceholder: 'Enter Room Code (e.g., ABC123)',
+                shareInfo: 'Share this code with friends to join your game!',
+                copyBtn: '📋 Copy',
+                shareBtn: '📤 Share',
+                status: {
+                    creating: '⏳ Creating room...',
+                    created: '✅ Room created: ',
+                    joining: '⏳ Joining room...',
+                    joined: '✅ Joined room: ',
+                    error: '❌ Error: ',
+                    noRooms: '❌ No rooms available',
+                    nameRequired: '❌ Please enter your name',
+                    codeRequired: '❌ Please enter a room code'
+                }
+            };
+            
+            document.getElementById('createTabLabel').textContent = t.createTab;
+            document.getElementById('joinTabLabel').textContent = t.joinTab;
+            document.getElementById('roomsTabLabel').textContent = t.roomsTab;
+            document.getElementById('createTitle').textContent = t.create;
+            document.getElementById('joinTitle').textContent = t.join;
+            document.getElementById('roomsTitle').textContent = t.rooms;
+            document.getElementById('nameLabel').textContent = t.name;
+            document.getElementById('charLabel').textContent = t.char;
+            document.getElementById('maxPlayersLabel').textContent = t.max;
+            document.getElementById('joinNameLabel').textContent = t.joinName;
+            document.getElementById('joinCharLabel').textContent = t.joinChar;
+            document.getElementById('roomSelectLabel').textContent = t.roomLabel;
+            document.getElementById('createRoomBtn').textContent = t.createBtn;
+            document.getElementById('joinRoomBtn').textContent = t.joinBtn;
+            document.getElementById('quickJoinBtn').textContent = t.quickJoin;
+            document.getElementById('refreshBtn').textContent = t.refresh;
+            document.getElementById('noRoomsMsg').textContent = t.noRooms;
+            document.getElementById('shareInfo').textContent = t.shareInfo;
+            document.getElementById('copyCodeBtn').textContent = t.copyBtn;
+            document.getElementById('shareCodeBtn').textContent = t.shareBtn;
+            
+            document.querySelector('#playerName').placeholder = t.placeholder;
+            document.querySelector('#joinPlayerName').placeholder = t.placeholder;
+            document.querySelector('#roomCodeInput').placeholder = t.codePlaceholder;
+        }
         
         // ============================================================
         // TAB NAVIGATION
@@ -806,15 +1099,12 @@
         
         function switchTab(tab) {
             currentTab = tab;
-            
             document.querySelectorAll('.tab-btn').forEach(b => {
                 b.classList.toggle('active', b.dataset.tab === tab);
             });
-            
             document.querySelectorAll('.tab-pane').forEach(pane => {
                 pane.classList.toggle('active', pane.id === 'tab' + tab.charAt(0).toUpperCase() + tab.slice(1));
             });
-            
             if (tab === 'rooms') {
                 socket.emit('get-rooms');
             }
@@ -849,7 +1139,7 @@
                     const originalText = btn.textContent;
                     btn.textContent = '✅ Copied!';
                     btn.classList.add('copied');
-                    showToast(`📋 Room code "${code}" copied to clipboard!`, 'success');
+                    showToast(`📋 Room code "${code}" copied!`, 'success');
                     setTimeout(() => {
                         btn.textContent = originalText;
                         btn.classList.remove('copied');
@@ -872,12 +1162,11 @@
             try {
                 document.execCommand('copy');
                 const btn = document.getElementById('copyCodeBtn');
-                const originalText = btn.textContent;
                 btn.textContent = '✅ Copied!';
                 btn.classList.add('copied');
                 showToast(`📋 Room code "${text}" copied!`, 'success');
                 setTimeout(() => {
-                    btn.textContent = originalText;
+                    btn.textContent = '📋 Copy';
                     btn.classList.remove('copied');
                 }, 2000);
             } catch (e) {
@@ -917,7 +1206,6 @@
                     showToast(`📤 Share link copied! Send to friends`, 'success');
                 }).catch(() => {
                     copyRoomCode();
-                    showToast(`📋 Room code ${code} copied! Share with friends.`, 'success');
                 });
             } else {
                 copyRoomCode();
@@ -925,136 +1213,6 @@
             }
         }
         
-        // ============================================================
-        // LANGUAGE TOGGLE
-        // ============================================================
-        document.getElementById('langEn').addEventListener('click', () => {
-            document.getElementById('langEn').classList.add('active');
-            document.getElementById('langAm').classList.remove('active');
-            document.getElementById('howEn').style.display = 'block';
-            document.getElementById('howAm').style.display = 'none';
-            currentLang = 'en';
-            updateMenuText('en');
-        });
-        
-        document.getElementById('langAm').addEventListener('click', () => {
-            document.getElementById('langAm').classList.add('active');
-            document.getElementById('langEn').classList.remove('active');
-            document.getElementById('howEn').style.display = 'none';
-            document.getElementById('howAm').style.display = 'block';
-            currentLang = 'am';
-            updateMenuText('am');
-        });
-        
-        function updateMenuText(lang) {
-            const t = lang === 'am' ? {
-                createTab: 'ክፍል ፍጠር',
-                joinTab: 'ክፍል ተቀላቀል',
-                roomsTab: 'ክፍሎች',
-                create: '🎮 ክፍል ፍጠር',
-                join: '🔗 ክፍል ተቀላቀል',
-                rooms: '📋 የሚገኙ ክፍሎች',
-                name: 'የተጫዋች ስም',
-                char: 'ገጸ ባህሪ',
-                max: 'ከፍተኛ ተጫዋቾች',
-                joinName: 'የተጫዋች ስም',
-                joinChar: 'ገጸ ባህሪ',
-                roomLabel: 'የክፍል ኮድ ያስገቡ',
-                createBtn: '🚀 ክፍል ፍጠር',
-                joinBtn: '🔗 ክፍል ተቀላቀል',
-                quickJoin: '⚡ ፈጣን መቀላቀል',
-                refresh: '🔄 አድስ',
-                noRooms: 'ምንም ክፍሎች የሉም። አዲስ ይፍጠሩ!',
-                placeholder: 'ስምዎን ያስገቡ',
-                codePlaceholder: 'የክፍል ኮድ ያስገቡ (ለምሳሌ ABC123)',
-                shareInfo: 'ከጓደኞች ጋር ይጋሩ!',
-                copyBtn: '📋 ቅዳ',
-                shareBtn: '📤 አጋራ',
-                waitingTitle: '👥 ተጫዋቾችን በመጠበቅ ላይ',
-                startBtn: '🎯 ጨዋታ ጀምር (2+ ተጫዋቾች ያስፈልጋሉ)',
-                cancelBtn: '❌ ሰርዝ',
-                playersJoined: '👥 ተጫዋቾች ተቀላቅለዋል',
-                waitingStatus: '⏳ ተጫዋቾችን በመጠበቅ ላይ...',
-                status: {
-                    creating: '⏳ ክፍል እየተፈጠረ...',
-                    created: '✅ ክፍል ተፈጠረ: ',
-                    joining: '⏳ እየተቀላቀለ...',
-                    joined: '✅ ተቀላቀለ: ',
-                    error: '❌ ስህተት: ',
-                    noRooms: '❌ ምንም የሚገኝ ክፍል የለም'
-                }
-            } : {
-                createTab: 'Create Room',
-                joinTab: 'Join Room',
-                roomsTab: 'Rooms',
-                create: '🎮 Create Room',
-                join: '🔗 Join Room',
-                rooms: '📋 Available Rooms',
-                name: 'Player Name',
-                char: 'Character',
-                max: 'Max Players',
-                joinName: 'Player Name',
-                joinChar: 'Character',
-                roomLabel: 'Enter Room Code',
-                createBtn: '🚀 Create Room',
-                joinBtn: '🔗 Join Room',
-                quickJoin: '⚡ Quick Join',
-                refresh: '🔄 Refresh Rooms',
-                noRooms: 'No rooms available. Create one!',
-                placeholder: 'Enter your name',
-                codePlaceholder: 'Enter Room Code (e.g., ABC123)',
-                shareInfo: 'Share this code with friends to join your game!',
-                copyBtn: '📋 Copy',
-                shareBtn: '📤 Share',
-                waitingTitle: '👥 Waiting for Players',
-                startBtn: '🎯 Start Game (Need 2+ Players)',
-                cancelBtn: '❌ Cancel',
-                playersJoined: '👥 players joined',
-                waitingStatus: '⏳ Waiting for more players...',
-                status: {
-                    creating: '⏳ Creating room...',
-                    created: '✅ Room created: ',
-                    joining: '⏳ Joining room...',
-                    joined: '✅ Joined room: ',
-                    error: '❌ Error: ',
-                    noRooms: '❌ No rooms available'
-                }
-            };
-            
-            document.getElementById('createTabLabel').textContent = t.createTab;
-            document.getElementById('joinTabLabel').textContent = t.joinTab;
-            document.getElementById('roomsTabLabel').textContent = t.roomsTab;
-            document.getElementById('createTitle').textContent = t.create;
-            document.getElementById('joinTitle').textContent = t.join;
-            document.getElementById('roomsTitle').textContent = t.rooms;
-            document.getElementById('nameLabel').textContent = t.name;
-            document.getElementById('charLabel').textContent = t.char;
-            document.getElementById('maxPlayersLabel').textContent = t.max;
-            document.getElementById('joinNameLabel').textContent = t.joinName;
-            document.getElementById('joinCharLabel').textContent = t.joinChar;
-            document.getElementById('roomSelectLabel').textContent = t.roomLabel;
-            document.getElementById('createRoomBtn').textContent = t.createBtn;
-            document.getElementById('joinRoomBtn').textContent = t.joinBtn;
-            document.getElementById('quickJoinBtn').textContent = t.quickJoin;
-            document.getElementById('refreshBtn').textContent = t.refresh;
-            document.getElementById('noRoomsMsg').textContent = t.noRooms;
-            document.getElementById('shareInfo').textContent = t.shareInfo;
-            document.getElementById('copyCodeBtn').textContent = t.copyBtn;
-            document.getElementById('shareCodeBtn').textContent = t.shareBtn;
-            
-            // Waiting room texts
-            document.querySelector('#waitingRoom h3').textContent = t.waitingTitle;
-            document.getElementById('startGameBtn').textContent = t.startBtn;
-            document.getElementById('cancelRoomBtn').textContent = t.cancelBtn;
-            
-            document.querySelector('#playerName').placeholder = t.placeholder;
-            document.querySelector('#joinPlayerName').placeholder = t.placeholder;
-            document.querySelector('#roomCodeInput').placeholder = t.codePlaceholder;
-        }
-        
-        // ============================================================
-        // COPY & SHARE EVENT LISTENERS
-        // ============================================================
         document.getElementById('copyCodeBtn').addEventListener('click', copyRoomCode);
         document.getElementById('shareCodeBtn').addEventListener('click', shareRoomCode);
         
@@ -1070,23 +1228,35 @@
             const status = document.getElementById('status');
             const t = currentLang === 'am' ? { error: '❌ ስህተት: ' } : { error: '❌ Error: ' };
             status.textContent = t.error + msg;
-            status.className = 'status-msg error';
+            status.className = 'status-msg error show';
             setTimeout(() => { status.className = 'status-msg'; }, 4000);
             showToast(msg, 'error');
         });
         
         // ============================================================
-        // CREATE ROOM - Now stays on page
+        // CREATE ROOM - With Validation
         // ============================================================
         document.getElementById('createRoomBtn').addEventListener('click', () => {
-            const playerName = document.getElementById('playerName').value.trim() || 'Player1';
+            const playerName = document.getElementById('playerName').value.trim();
             const character = document.getElementById('characterSelect').value;
             const maxPlayers = parseInt(document.getElementById('maxPlayersSelect').value);
-            
             const status = document.getElementById('status');
-            const t = currentLang === 'am' ? { creating: '⏳ ክፍል እየተፈጠረ...' } : { creating: '⏳ Creating room...' };
-            status.textContent = t.creating;
-            status.className = 'status-msg info';
+            const t = currentLang === 'am' ? { nameRequired: '❌ እባክዎ ስምዎን ያስገቡ' } : { nameRequired: '❌ Please enter your name' };
+            
+            // Validate name
+            if (!playerName) {
+                document.getElementById('playerName').classList.add('error');
+                status.textContent = t.nameRequired;
+                status.className = 'status-msg error show';
+                setTimeout(() => {
+                    document.getElementById('playerName').classList.remove('error');
+                }, 3000);
+                return;
+            }
+            
+            document.getElementById('playerName').classList.remove('error');
+            status.textContent = currentLang === 'am' ? '⏳ ክፍል እየተፈጠረ...' : '⏳ Creating room...';
+            status.className = 'status-msg info show';
             
             socket.emit('create-room', { playerName, character, maxPlayers });
         });
@@ -1095,221 +1265,106 @@
             const status = document.getElementById('status');
             const t = currentLang === 'am' ? { created: '✅ ክፍል ተፈጠረ: ' } : { created: '✅ Room created: ' };
             status.textContent = t.created + data.roomId + ` (${data.maxPlayers} players)`;
-            status.className = 'status-msg success';
+            status.className = 'status-msg success show';
             
             // Show room code
             currentRoomCode = data.roomId;
-            myRoomId = data.roomId;
-            isRoomCreator = true;
             document.getElementById('roomCodeDisplay').textContent = data.roomId;
             document.getElementById('roomCodeContainer').classList.add('show');
-            
-            // Show waiting room
-            document.getElementById('waitingRoom').classList.add('show');
-            
-            // Add creator to waiting list
-            waitingPlayers = [{ name: data.player.name, id: socket.id, isReady: true }];
-            updateWaitingRoom();
-            
-            // Disable create button
-            document.getElementById('createRoomBtn').disabled = true;
-            document.getElementById('createRoomBtn').textContent = '✅ Room Created';
-            
-            // Show badge
             document.getElementById('createBadge').style.display = 'inline';
             
-            // Copy code automatically
+            // Auto copy
+            setTimeout(copyRoomCode, 500);
+            
+            localStorage.setItem('playerName', data.player.name);
+            
+            // Redirect after 3 seconds
             setTimeout(() => {
-                copyRoomCode();
-            }, 500);
-            
-            showToast(`✅ Room created: ${data.roomId}. Share the code!`, 'success');
+                window.location.href = `/game?roomId=${data.roomId}`;
+            }, 3000);
         });
         
         // ============================================================
-        // WAITING ROOM - Player joined updates
-        // ============================================================
-        socket.on('player-joined', (data) => {
-            const player = data.player;
-            // Check if this is our room
-            if (myRoomId && player.roomId === myRoomId) {
-                // Add to waiting list if not already there
-                if (!waitingPlayers.find(p => p.id === player.id)) {
-                    waitingPlayers.push({ 
-                        name: player.name, 
-                        id: player.id, 
-                        isReady: true,
-                        character: player.character
-                    });
-                    updateWaitingRoom();
-                    showToast(`👤 ${player.name} joined the room!`, 'info');
-                }
-            }
-        });
-        
-        socket.on('player-left', (data) => {
-            if (myRoomId) {
-                waitingPlayers = waitingPlayers.filter(p => p.id !== data.playerId);
-                updateWaitingRoom();
-                showToast(`👋 ${data.playerName} left the room`, 'warning');
-            }
-        });
-        
-        socket.on('game-start', (data) => {
-            if (myRoomId) {
-                // Game is starting - redirect to game
-                showToast('🎯 Game starting!', 'success');
-                setTimeout(() => {
-                    window.location.href = `/game?roomId=${myRoomId}`;
-                }, 500);
-            }
-        });
-        
-        // ============================================================
-        // WAITING ROOM UI FUNCTIONS
-        // ============================================================
-        function updateWaitingRoom() {
-            const container = document.getElementById('waitingPlayers');
-            const maxPlayers = parseInt(document.getElementById('maxPlayersSelect').value);
-            const t = currentLang === 'am' ? {
-                playersJoined: '👥 ተጫዋቾች ተቀላቅለዋል',
-                waitingStatus: '⏳ ተጫዋቾችን በመጠበቅ ላይ...',
-                ready: '✅ ዝግጁ',
-                notReady: '⏳ በመጠበቅ ላይ'
-            } : {
-                playersJoined: '👥 players joined',
-                waitingStatus: '⏳ Waiting for more players...',
-                ready: '✅ Ready',
-                notReady: '⏳ Waiting'
-            };
-            
-            if (waitingPlayers.length === 0) {
-                container.innerHTML = `<div class="waiting-status">${t.waitingStatus}</div>`;
-                document.getElementById('playerCountDisplay').textContent = `👥 0 ${t.playersJoined}`;
-                document.getElementById('readyStatus').textContent = t.waitingStatus;
-                document.getElementById('startGameBtn').disabled = true;
-                document.getElementById('startGameBtn').textContent = t.startBtn;
-                return;
-            }
-            
-            let html = '';
-            waitingPlayers.forEach(p => {
-                const isCreator = p.id === socket.id;
-                const charEmoji = p.character === 'soldier' ? '🔫' : 
-                                  p.character === 'ninja' ? '🥷' :
-                                  p.character === 'wizard' ? '🧙' : '🛡️';
-                html += `
-                    <div class="player-item">
-                        <span class="name">${charEmoji} ${p.name} ${isCreator ? '👑' : ''}</span>
-                        <span class="status">${p.isReady ? t.ready : t.notReady}</span>
-                    </div>
-                `;
-            });
-            
-            container.innerHTML = html;
-            
-            // Update player count
-            document.getElementById('playerCountDisplay').textContent = 
-                `👥 ${waitingPlayers.length}/${maxPlayers} ${t.playersJoined}`;
-            
-            // Update ready status
-            if (waitingPlayers.length >= 2) {
-                document.getElementById('readyStatus').textContent = '✅ Ready to start!';
-                document.getElementById('startGameBtn').disabled = false;
-                document.getElementById('startGameBtn').textContent = 
-                    currentLang === 'am' ? '🎯 ጨዋታ ጀምር!' : '🎯 Start Game!';
-            } else {
-                document.getElementById('readyStatus').textContent = t.waitingStatus;
-                document.getElementById('startGameBtn').disabled = true;
-                document.getElementById('startGameBtn').textContent = 
-                    currentLang === 'am' ? '🎯 ጨዋታ ጀምር (2+ ተጫዋቾች ያስፈልጋሉ)' : '🎯 Start Game (Need 2+ Players)';
-            }
-        }
-        
-        // ============================================================
-        // START GAME BUTTON
-        // ============================================================
-        document.getElementById('startGameBtn').addEventListener('click', () => {
-            if (waitingPlayers.length < 2) {
-                showToast('Need at least 2 players to start!', 'error');
-                return;
-            }
-            
-            // Emit start game event
-            socket.emit('start-game', { roomId: myRoomId });
-            showToast('🎯 Starting game...', 'info');
-            document.getElementById('startGameBtn').disabled = true;
-            document.getElementById('startGameBtn').textContent = '⏳ Starting...';
-        });
-        
-        // ============================================================
-        // CANCEL ROOM BUTTON
-        // ============================================================
-        document.getElementById('cancelRoomBtn').addEventListener('click', () => {
-            if (confirm(currentLang === 'am' ? 'እርግጠኛ ነዎት ክፍሉን መሰረዝ ይፈልጋሉ?' : 'Are you sure you want to cancel the room?')) {
-                // Leave room
-                socket.emit('leave-room', { roomId: myRoomId });
-                resetRoomCreation();
-                showToast('❌ Room cancelled', 'error');
-                window.location.reload();
-            }
-        });
-        
-        function resetRoomCreation() {
-            myRoomId = null;
-            isRoomCreator = false;
-            waitingPlayers = [];
-            document.getElementById('waitingRoom').classList.remove('show');
-            document.getElementById('roomCodeContainer').classList.remove('show');
-            document.getElementById('createRoomBtn').disabled = false;
-            document.getElementById('createRoomBtn').textContent = 
-                currentLang === 'am' ? '🚀 ክፍል ፍጠር' : '🚀 Create Room';
-            document.getElementById('createBadge').style.display = 'none';
-        }
-        
-        // ============================================================
-        // JOIN ROOM
+        // JOIN ROOM - With Validation
         // ============================================================
         document.getElementById('joinRoomBtn').addEventListener('click', () => {
             const roomId = document.getElementById('roomCodeInput').value.trim().toUpperCase();
-            const playerName = document.getElementById('joinPlayerName').value.trim() || 'Player2';
+            const playerName = document.getElementById('joinPlayerName').value.trim();
             const character = document.getElementById('characterSelectJoin').value;
+            const status = document.getElementById('joinStatus');
+            const t = currentLang === 'am' ? {
+                nameRequired: '❌ እባክዎ ስምዎን ያስገቡ',
+                codeRequired: '❌ እባክዎ የክፍል ኮድ ያስገቡ'
+            } : {
+                nameRequired: '❌ Please enter your name',
+                codeRequired: '❌ Please enter a room code'
+            };
             
-            if (!roomId) {
-                const status = document.getElementById('joinStatus');
-                status.textContent = currentLang === 'am' ? '❌ እባክዎ የክፍል ኮድ ያስገቡ' : '❌ Please enter a room code';
-                status.className = 'status-msg error';
-                showToast('Please enter a room code', 'error');
+            // Validate name
+            if (!playerName) {
+                document.getElementById('joinPlayerName').classList.add('error');
+                status.textContent = t.nameRequired;
+                status.className = 'status-msg error show';
+                setTimeout(() => {
+                    document.getElementById('joinPlayerName').classList.remove('error');
+                }, 3000);
                 return;
             }
+            document.getElementById('joinPlayerName').classList.remove('error');
             
-            const status = document.getElementById('joinStatus');
-            const t = currentLang === 'am' ? { joining: '⏳ እየተቀላቀለ...' } : { joining: '⏳ Joining room...' };
-            status.textContent = t.joining;
-            status.className = 'status-msg info';
+            // Validate room code
+            if (!roomId) {
+                document.getElementById('roomCodeInput').classList.add('error');
+                status.textContent = t.codeRequired;
+                status.className = 'status-msg error show';
+                setTimeout(() => {
+                    document.getElementById('roomCodeInput').classList.remove('error');
+                }, 3000);
+                return;
+            }
+            document.getElementById('roomCodeInput').classList.remove('error');
+            
+            status.textContent = currentLang === 'am' ? '⏳ እየተቀላቀለ...' : '⏳ Joining room...';
+            status.className = 'status-msg info show';
             
             socket.emit('join-room', { roomId, playerName, character });
         });
         
         // Quick Join
         document.getElementById('quickJoinBtn').addEventListener('click', () => {
+            const playerName = document.getElementById('joinPlayerName').value.trim();
+            const character = document.getElementById('characterSelectJoin').value;
+            const status = document.getElementById('joinStatus');
+            const t = currentLang === 'am' ? {
+                nameRequired: '❌ እባክዎ ስምዎን ያስገቡ',
+                noRooms: '❌ ምንም የሚገኝ ክፍል የለም'
+            } : {
+                nameRequired: '❌ Please enter your name',
+                noRooms: '❌ No rooms available'
+            };
+            
+            // Validate name
+            if (!playerName) {
+                document.getElementById('joinPlayerName').classList.add('error');
+                status.textContent = t.nameRequired;
+                status.className = 'status-msg error show';
+                setTimeout(() => {
+                    document.getElementById('joinPlayerName').classList.remove('error');
+                }, 3000);
+                return;
+            }
+            document.getElementById('joinPlayerName').classList.remove('error');
+            
             const availableRooms = roomsData.filter(r => r.players < r.maxPlayers && !r.gameStarted);
             if (availableRooms.length === 0) {
-                const status = document.getElementById('joinStatus');
-                status.textContent = currentLang === 'am' ? '❌ ምንም የሚገኝ ክፍል የለም' : '❌ No rooms available';
-                status.className = 'status-msg error';
-                showToast('No rooms available to join', 'error');
+                status.textContent = t.noRooms;
+                status.className = 'status-msg error show';
                 return;
             }
             
             const room = availableRooms[0];
-            const playerName = document.getElementById('joinPlayerName').value.trim() || 'Player';
-            const character = document.getElementById('characterSelectJoin').value;
-            
-            const status = document.getElementById('joinStatus');
-            const t = currentLang === 'am' ? { joining: '⏳ እየተቀላቀለ...' } : { joining: '⏳ Joining room...' };
-            status.textContent = t.joining;
-            status.className = 'status-msg info';
+            status.textContent = currentLang === 'am' ? '⏳ እየተቀላቀለ...' : '⏳ Joining room...';
+            status.className = 'status-msg info show';
             
             socket.emit('join-room', { roomId: room.id, playerName, character });
         });
@@ -1318,13 +1373,12 @@
             const status = document.getElementById('joinStatus');
             const t = currentLang === 'am' ? { joined: '✅ ተቀላቀለ: ' } : { joined: '✅ Joined room: ' };
             status.textContent = t.joined + data.roomId;
-            status.className = 'status-msg success';
+            status.className = 'status-msg success show';
             
             document.getElementById('joinBadge').style.display = 'inline';
             localStorage.setItem('playerName', data.players.find(p => p.id === data.playerId)?.name || 'Player');
             showToast(`✅ Joined room: ${data.roomId}`, 'success');
             
-            // Redirect to game immediately
             setTimeout(() => {
                 window.location.href = `/game?roomId=${data.roomId}`;
             }, 800);
@@ -1376,31 +1430,60 @@
         // GLOBAL FUNCTIONS
         // ============================================================
         window.quickJoinRoom = function(roomId) {
-            const playerName = document.getElementById('joinPlayerName').value.trim() || 'Player';
+            const playerName = document.getElementById('joinPlayerName').value.trim();
             const character = document.getElementById('characterSelectJoin').value;
-            
             const status = document.getElementById('roomsStatus');
-            const t = currentLang === 'am' ? { joining: '⏳ እየተቀላቀለ...' } : { joining: '⏳ Joining room...' };
-            status.textContent = t.joining;
-            status.className = 'status-msg info';
+            
+            if (!playerName) {
+                document.getElementById('joinPlayerName').classList.add('error');
+                status.textContent = currentLang === 'am' ? '❌ እባክዎ ስምዎን ያስገቡ' : '❌ Please enter your name';
+                status.className = 'status-msg error show';
+                setTimeout(() => {
+                    document.getElementById('joinPlayerName').classList.remove('error');
+                }, 3000);
+                return;
+            }
+            
+            status.textContent = currentLang === 'am' ? '⏳ እየተቀላቀለ...' : '⏳ Joining room...';
+            status.className = 'status-msg info show';
             
             socket.emit('join-room', { roomId, playerName, character });
         };
         
         // ============================================================
-        // KEYBOARD SHORTCUTS
+        // HOW TO PLAY MODAL
         // ============================================================
-        document.addEventListener('keydown', (e) => {
-            if (e.ctrlKey && e.key === 'c') {
-                const container = document.getElementById('roomCodeContainer');
-                if (container.classList.contains('show')) {
-                    e.preventDefault();
-                    copyRoomCode();
-                }
+        const modal = document.getElementById('howToPlayModal');
+        const howToPlayBtn = document.getElementById('howToPlayBtn');
+        const modalCloseBtn = document.getElementById('modalCloseBtn');
+        const modalCloseBtn2 = document.getElementById('modalCloseBtn2');
+        
+        function openModal() {
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal() {
+            modal.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+        
+        howToPlayBtn.addEventListener('click', openModal);
+        modalCloseBtn.addEventListener('click', closeModal);
+        modalCloseBtn2.addEventListener('click', closeModal);
+        
+        // Close modal on overlay click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
             }
-            if (e.key === '1') switchTab('create');
-            if (e.key === '2') switchTab('join');
-            if (e.key === '3') switchTab('rooms');
+        });
+        
+        // Close modal on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('show')) {
+                closeModal();
+            }
         });
         
         // ============================================================
@@ -1413,15 +1496,20 @@
         // ============================================================
         // INITIAL SETUP
         // ============================================================
-        document.getElementById('howEn').style.display = 'block';
-        document.getElementById('howAm').style.display = 'none';
+        document.getElementById('modalEn').style.display = 'block';
+        document.getElementById('modalAm').style.display = 'none';
         updateMenuText('en');
         
-        console.log('🏠 Room system ready with waiting room!');
-        console.log('📋 Create a room and wait for players to join');
-        console.log('🎯 Start the game when you have 2+ players');
-        console.log('⌨️ Press 1, 2, or 3 to switch tabs');
-        console.log('📋 Room code auto-copies when you create a room!');
+        // Focus on first input
+        setTimeout(() => {
+            document.getElementById('playerName').focus();
+        }, 500);
+        
+        console.log('🏠 Game lobby ready!');
+        console.log('📖 Click "How to Play" to see game rules');
+        console.log('👤 Name is required to create or join a room');
+        console.log('🔴🔵 Team battle - Red vs Blue!');
+        console.log('📋 Developed by Haile © 2026');
     </script>
 </body>
 </html>
