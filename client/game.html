@@ -32,7 +32,7 @@
         .game-wrapper {
             background: rgba(0, 0, 0, 0.92);
             border-radius: 14px;
-            padding: 8px;
+            padding: 6px 6px 0 6px;
             box-shadow: 0 12px 48px rgba(0, 0, 0, 0.9);
             width: 100%;
             height: 100%;
@@ -46,60 +46,61 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 4px 10px;
+            padding: 3px 8px;
             color: #fff;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             flex-shrink: 0;
-            min-height: 38px;
+            min-height: 30px;
             flex-wrap: wrap;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 8px 8px 0 0;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px 10px 0 0;
         }
         .game-info {
             display: flex;
-            gap: 6px;
-            font-size: 11px;
+            gap: 4px;
+            font-size: 9px;
             flex-wrap: wrap;
             align-items: center;
         }
         .game-info span {
             background: rgba(255, 255, 255, 0.08);
-            padding: 2px 8px;
+            padding: 1px 6px;
             border-radius: 4px;
-            font-size: 10px;
+            font-size: 8px;
         }
         .game-info .team-red {
             background: rgba(255, 0, 0, 0.25);
             color: #ff6b6b;
-            border: 1px solid rgba(255, 0, 0, 0.25);
+            border: 1px solid rgba(255, 0, 0, 0.2);
         }
         .game-info .team-blue {
             background: rgba(0, 100, 255, 0.25);
             color: #4facfe;
-            border: 1px solid rgba(0, 100, 255, 0.25);
+            border: 1px solid rgba(0, 100, 255, 0.2);
         }
         .game-info .alive-count {
             background: rgba(107, 203, 119, 0.2);
             color: #6bcb77;
         }
         #exitBtn {
-            padding: 4px 12px;
+            padding: 2px 10px;
             background: rgba(255, 107, 107, 0.2);
             border: 1px solid #ff6b6b;
-            border-radius: 6px;
+            border-radius: 5px;
             color: #ff6b6b;
             cursor: pointer;
-            font-size: 10px;
+            font-size: 9px;
             touch-action: manipulation;
         }
         .game-container {
             position: relative;
-            flex: 1;
+            flex: 1 1 auto;
             touch-action: none;
             overflow: hidden;
             border-radius: 8px;
-            min-height: 120px;
+            min-height: 60vh;
             background: #1a0a2e;
+            margin: 2px 0 2px 0;
         }
         #gameCanvas {
             display: block;
@@ -114,9 +115,9 @@
         /* HUD */
         .game-hud {
             position: absolute;
-            top: 6px;
-            left: 6px;
-            right: 6px;
+            top: 4px;
+            left: 4px;
+            right: 4px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -124,16 +125,16 @@
             z-index: 5;
         }
         .health-bar {
-            width: 100px;
+            width: 90px;
             background: rgba(0, 0, 0, 0.8);
-            border-radius: 6px;
-            padding: 3px;
-            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-radius: 5px;
+            padding: 2px;
+            border: 1.5px solid rgba(255, 255, 255, 0.12);
             position: relative;
         }
         .health-fill {
-            height: 16px;
-            border-radius: 4px;
+            height: 14px;
+            border-radius: 3px;
             transition: width 0.3s ease;
             background: linear-gradient(90deg, #ff6b6b, #ffd93d);
         }
@@ -142,7 +143,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 8px;
+            font-size: 7px;
             font-weight: bold;
             color: #fff;
             text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
@@ -151,63 +152,63 @@
         .hud-center {
             text-align: center;
             background: rgba(0, 0, 0, 0.7);
-            padding: 4px 12px;
-            border-radius: 6px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 2px 10px;
+            border-radius: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
             color: #fff;
             pointer-events: none;
         }
         #gameStatus {
-            font-size: 12px;
+            font-size: 10px;
             font-weight: bold;
         }
         #scoreDisplay {
-            font-size: 10px;
+            font-size: 8px;
             color: #ffd93d;
         }
 
         .weapon-hud {
             position: absolute;
-            bottom: 100px;
+            bottom: 12px;
             left: 50%;
             transform: translateX(-50%);
             background: rgba(0, 0, 0, 0.85);
-            padding: 6px 16px;
-            border-radius: 10px;
-            border: 2px solid rgba(255, 215, 0, 0.2);
+            padding: 3px 12px;
+            border-radius: 8px;
+            border: 1.5px solid rgba(255, 215, 0, 0.15);
             color: #fff;
-            font-size: 12px;
+            font-size: 9px;
             pointer-events: none;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             z-index: 5;
             white-space: nowrap;
         }
         .weapon-hud .weapon-icon {
-            font-size: 18px;
+            font-size: 14px;
         }
         .weapon-hud .weapon-name {
             color: #ffd93d;
             font-weight: bold;
-            font-size: 12px;
+            font-size: 9px;
         }
         .weapon-hud .weapon-damage {
             color: #ff6b6b;
-            font-size: 10px;
+            font-size: 8px;
         }
 
         .pickup-indicator {
             position: absolute;
-            bottom: 145px;
+            bottom: 48px;
             left: 50%;
             transform: translateX(-50%);
             background: rgba(0, 0, 0, 0.85);
-            padding: 4px 14px;
-            border-radius: 6px;
-            border: 1px solid rgba(255, 215, 0, 0.25);
+            padding: 2px 12px;
+            border-radius: 5px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
             color: #ffd93d;
-            font-size: 10px;
+            font-size: 8px;
             pointer-events: none;
             z-index: 5;
             opacity: 0;
@@ -220,23 +221,23 @@
 
         .kill-feed {
             position: absolute;
-            top: 50px;
-            right: 8px;
+            top: 42px;
+            right: 6px;
             z-index: 8;
             pointer-events: none;
             display: flex;
             flex-direction: column;
-            gap: 2px;
+            gap: 1px;
             align-items: flex-end;
-            max-width: 180px;
+            max-width: 160px;
         }
         .kill-msg {
             background: rgba(0, 0, 0, 0.85);
-            padding: 4px 12px;
-            border-radius: 6px;
-            font-size: 10px;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 8px;
             color: #fff;
-            border-left: 3px solid #ffd93d;
+            border-left: 2px solid #ffd93d;
             animation: killFade 2.5s ease forwards;
             white-space: nowrap;
             backdrop-filter: blur(4px);
@@ -258,7 +259,7 @@
         @keyframes killFade {
             0% {
                 opacity: 0;
-                transform: translateX(15px);
+                transform: translateX(12px);
             }
             15% {
                 opacity: 1;
@@ -270,7 +271,7 @@
             }
             100% {
                 opacity: 0;
-                transform: translateX(15px);
+                transform: translateX(12px);
             }
         }
 
@@ -304,17 +305,17 @@
             }
         }
         .center-announcement .title {
-            font-size: 38px;
+            font-size: 32px;
             font-weight: bold;
             text-shadow: 0 0 40px rgba(0, 0, 0, 0.9);
-            padding: 10px 24px;
-            border-radius: 12px;
+            padding: 8px 20px;
+            border-radius: 10px;
             background: rgba(0, 0, 0, 0.75);
-            border: 2px solid rgba(255, 215, 0, 0.2);
+            border: 2px solid rgba(255, 215, 0, 0.15);
         }
         .center-announcement .subtitle {
-            font-size: 16px;
-            margin-top: 4px;
+            font-size: 14px;
+            margin-top: 3px;
             color: #aaa;
             text-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
         }
@@ -360,17 +361,17 @@
         }
         .game-over-box {
             background: rgba(10, 10, 30, 0.97);
-            padding: 25px 30px;
-            border-radius: 16px;
-            border: 2px solid rgba(255, 215, 0, 0.2);
-            max-width: 350px;
+            padding: 20px 24px;
+            border-radius: 14px;
+            border: 2px solid rgba(255, 215, 0, 0.15);
+            max-width: 320px;
             width: 90%;
             text-align: center;
         }
         .game-over-box .title {
-            font-size: 36px;
+            font-size: 30px;
             font-weight: bold;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
         }
         .game-over-box .title.win {
             color: #ffd93d;
@@ -379,29 +380,29 @@
             color: #ff6b6b;
         }
         .game-over-box .subtitle {
-            font-size: 14px;
+            font-size: 12px;
             color: #aaa;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
         .game-over-box .stats {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            gap: 8px;
-            margin: 10px 0;
-            padding: 12px;
+            gap: 6px;
+            margin: 8px 0;
+            padding: 10px;
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
+            border-radius: 8px;
         }
         .game-over-box .stat-item {
             text-align: center;
         }
         .game-over-box .stat-item .value {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
             color: #ffd93d;
         }
         .game-over-box .stat-item .label {
-            font-size: 10px;
+            font-size: 9px;
             color: #888;
         }
         .game-over-box .stat-item .value.kills {
@@ -415,45 +416,45 @@
         }
 
         .game-over-box .winner-info {
-            font-size: 13px;
+            font-size: 12px;
             color: #fff;
-            margin: 6px 0;
-            padding: 6px;
+            margin: 5px 0;
+            padding: 5px;
             background: rgba(255, 215, 0, 0.06);
-            border-radius: 6px;
+            border-radius: 5px;
         }
         .game-over-box .winner-info .name {
             color: #ffd93d;
             font-weight: bold;
-            font-size: 16px;
+            font-size: 15px;
         }
 
         .game-over-box .restart-btn {
             width: 100%;
-            padding: 10px;
-            margin-top: 6px;
+            padding: 8px;
+            margin-top: 5px;
             background: linear-gradient(45deg, #6bcb77, #2d7d46);
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             color: #fff;
-            font-size: 15px;
+            font-size: 13px;
             font-weight: bold;
             cursor: pointer;
             touch-action: manipulation;
         }
         .game-over-box .restart-btn.secondary {
             background: linear-gradient(45deg, #4facfe, #0f3460);
-            margin-top: 4px;
+            margin-top: 3px;
         }
         .game-over-box .countdown {
-            font-size: 12px;
+            font-size: 10px;
             color: #888;
-            margin-top: 6px;
+            margin-top: 5px;
         }
         .game-over-box .countdown .time {
             color: #ffd93d;
             font-weight: bold;
-            font-size: 16px;
+            font-size: 14px;
         }
 
         .confetti-container {
@@ -469,8 +470,8 @@
         }
         .confetti {
             position: absolute;
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
             opacity: 0;
             animation: confettiFall 3s ease forwards;
         }
@@ -486,28 +487,28 @@
         }
 
         /* ============================================================
-           TOUCH CONTROLS – BIGGER BUTTONS
+           TOUCH CONTROLS – POSITIONED NEAR GAME AREA
            ============================================================ */
         .touch-controls {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-            gap: 6px;
-            padding: 6px;
+            gap: 4px;
+            padding: 4px 4px 6px 4px;
             flex-shrink: 0;
-            height: 90px;
+            height: 72px;
             touch-action: none;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.4);
             border-radius: 0 0 10px 10px;
-            margin-top: 4px;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            margin-top: 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
             position: relative;
             z-index: 30;
         }
         .touch-btn {
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             color: #fff;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: bold;
             touch-action: none;
             cursor: pointer;
@@ -518,212 +519,113 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            gap: 1px;
+            gap: 0px;
             text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
-            border: 2px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            min-height: 68px;
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            min-height: 54px;
+            padding: 2px 0;
         }
         .touch-btn:active {
             transform: scale(0.88);
             filter: brightness(1.4);
         }
         .touch-btn .sub-label {
-            font-size: 9px;
-            opacity: 0.8;
+            font-size: 7px;
+            opacity: 0.7;
             font-weight: normal;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
+            margin-top: 0px;
         }
 
         .touch-btn.up {
             background: linear-gradient(135deg, #4facfe, #2d7dd6);
-            border-color: rgba(79, 172, 254, 0.5);
-            box-shadow: 0 2px 15px rgba(79, 172, 254, 0.2);
+            border-color: rgba(79, 172, 254, 0.4);
+            box-shadow: 0 2px 12px rgba(79, 172, 254, 0.15);
         }
         .touch-btn.down {
             background: linear-gradient(135deg, #4facfe, #2d7dd6);
-            border-color: rgba(79, 172, 254, 0.5);
-            box-shadow: 0 2px 15px rgba(79, 172, 254, 0.2);
+            border-color: rgba(79, 172, 254, 0.4);
+            box-shadow: 0 2px 12px rgba(79, 172, 254, 0.15);
         }
         .touch-btn.left {
             background: linear-gradient(135deg, #4facfe, #2d7dd6);
-            border-color: rgba(79, 172, 254, 0.5);
-            box-shadow: 0 2px 15px rgba(79, 172, 254, 0.2);
+            border-color: rgba(79, 172, 254, 0.4);
+            box-shadow: 0 2px 12px rgba(79, 172, 254, 0.15);
         }
         .touch-btn.right {
             background: linear-gradient(135deg, #4facfe, #2d7dd6);
-            border-color: rgba(79, 172, 254, 0.5);
-            box-shadow: 0 2px 15px rgba(79, 172, 254, 0.2);
+            border-color: rgba(79, 172, 254, 0.4);
+            box-shadow: 0 2px 12px rgba(79, 172, 254, 0.15);
         }
         .touch-btn.up:active,
         .touch-btn.down:active,
         .touch-btn.left:active,
         .touch-btn.right:active {
             background: linear-gradient(135deg, #6bcbff, #4facfe);
-            box-shadow: 0 2px 30px rgba(79, 172, 254, 0.4);
+            box-shadow: 0 2px 25px rgba(79, 172, 254, 0.35);
         }
 
         .touch-btn.shoot {
             background: linear-gradient(135deg, #ff6b35, #e53e00);
-            border-color: rgba(255, 107, 53, 0.6);
-            font-size: 22px;
-            box-shadow: 0 2px 20px rgba(255, 69, 0, 0.3);
+            border-color: rgba(255, 107, 53, 0.5);
+            font-size: 18px;
+            box-shadow: 0 2px 16px rgba(255, 69, 0, 0.25);
             grid-column: span 1;
         }
         .touch-btn.shoot:active {
             background: linear-gradient(135deg, #ff8c5a, #ff6b35);
-            box-shadow: 0 2px 40px rgba(255, 69, 0, 0.5);
+            box-shadow: 0 2px 35px rgba(255, 69, 0, 0.45);
         }
         .touch-btn.shoot .sub-label {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 8px;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 6px;
         }
 
         .touch-btn.pickup {
             background: linear-gradient(135deg, #ffd93d, #f0a500);
-            border-color: rgba(255, 215, 0, 0.5);
-            font-size: 18px;
+            border-color: rgba(255, 215, 0, 0.4);
+            font-size: 14px;
             color: #1a1a2e;
-            text-shadow: 0 1px 3px rgba(255, 215, 0, 0.3);
+            text-shadow: 0 1px 3px rgba(255, 215, 0, 0.2);
             grid-column: span 5;
             margin-top: 0;
-            padding: 4px 0;
-            min-height: 36px;
-            box-shadow: 0 2px 20px rgba(255, 215, 0, 0.15);
+            padding: 2px 0;
+            min-height: 26px;
+            box-shadow: 0 2px 16px rgba(255, 215, 0, 0.1);
         }
         .touch-btn.pickup:active {
             background: linear-gradient(135deg, #ffe066, #ffd93d);
-            box-shadow: 0 2px 40px rgba(255, 215, 0, 0.3);
+            box-shadow: 0 2px 35px rgba(255, 215, 0, 0.25);
             transform: scale(0.95);
         }
         .touch-btn.pickup .sub-label {
             color: #1a1a2e;
-            font-size: 8px;
-            opacity: 0.7;
+            font-size: 6px;
+            opacity: 0.6;
         }
 
         .sound-toggle {
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
+            border-radius: 3px;
             color: #fff;
-            padding: 2px 8px;
+            padding: 1px 6px;
             cursor: pointer;
-            font-size: 8px;
+            font-size: 7px;
             touch-action: manipulation;
         }
 
-        /* Responsive adjustments */
+        /* Responsive */
         @media (max-width: 480px) {
             .game-wrapper {
-                padding: 4px;
+                padding: 4px 4px 0 4px;
                 border-radius: 6px;
             }
             .game-header {
-                padding: 2px 6px;
-                min-height: 30px;
-            }
-            .game-info span {
-                font-size: 8px;
-                padding: 1px 5px;
-            }
-            .health-bar {
-                width: 70px;
-            }
-            .health-fill {
-                height: 12px;
-            }
-            .health-text {
-                font-size: 6px;
-            }
-            #gameStatus {
-                font-size: 9px;
-            }
-            #scoreDisplay {
-                font-size: 8px;
-            }
-            .hud-center {
-                padding: 2px 6px;
-            }
-
-            .touch-controls {
-                height: 75px;
-                gap: 5px;
-                padding: 5px;
-            }
-            .touch-btn {
-                font-size: 19px;
-                border-radius: 8px;
-                min-height: 55px;
-            }
-            .touch-btn .sub-label {
-                font-size: 7px;
-            }
-            .touch-btn.shoot {
-                font-size: 17px;
-            }
-            .touch-btn.pickup {
-                font-size: 15px;
-                min-height: 30px;
-            }
-
-            .weapon-hud {
-                bottom: 80px;
-                padding: 4px 10px;
-                font-size: 10px;
-            }
-            .weapon-hud .weapon-icon {
-                font-size: 14px;
-            }
-            .pickup-indicator {
-                bottom: 115px;
-                font-size: 8px;
-                padding: 3px 10px;
-            }
-            .kill-feed {
-                top: 40px;
-                max-width: 130px;
-            }
-            .kill-msg {
-                font-size: 8px;
-                padding: 3px 8px;
-            }
-            .center-announcement .title {
-                font-size: 26px;
-                padding: 6px 14px;
-            }
-            .center-announcement .subtitle {
-                font-size: 12px;
-            }
-            .game-over-box {
-                padding: 16px 20px;
-                max-width: 280px;
-            }
-            .game-over-box .title {
-                font-size: 28px;
-            }
-            .game-over-box .stats {
-                padding: 8px;
-                gap: 4px;
-            }
-            .game-over-box .stat-item .value {
-                font-size: 20px;
-            }
-            .game-over-box .restart-btn {
-                font-size: 13px;
-                padding: 8px;
-            }
-        }
-
-        @media (orientation: landscape) and (max-height: 500px) {
-            .game-wrapper {
-                padding: 4px;
-            }
-            .game-header {
-                padding: 2px 6px;
-                min-height: 26px;
-                margin-bottom: 2px;
+                padding: 2px 5px;
+                min-height: 24px;
             }
             .game-info span {
                 font-size: 7px;
@@ -738,11 +640,20 @@
             .health-text {
                 font-size: 5px;
             }
+            #gameStatus {
+                font-size: 8px;
+            }
+            #scoreDisplay {
+                font-size: 7px;
+            }
+            .hud-center {
+                padding: 1px 6px;
+            }
 
             .touch-controls {
                 height: 60px;
-                gap: 4px;
-                padding: 4px;
+                gap: 3px;
+                padding: 3px 3px 4px 3px;
             }
             .touch-btn {
                 font-size: 16px;
@@ -756,55 +667,173 @@
                 font-size: 14px;
             }
             .touch-btn.pickup {
-                font-size: 13px;
-                min-height: 26px;
+                font-size: 12px;
+                min-height: 22px;
             }
 
             .weapon-hud {
-                bottom: 60px;
-                padding: 3px 8px;
+                bottom: 8px;
+                padding: 2px 8px;
                 font-size: 8px;
             }
             .weapon-hud .weapon-icon {
                 font-size: 11px;
             }
             .pickup-indicator {
-                bottom: 85px;
+                bottom: 38px;
                 font-size: 7px;
                 padding: 2px 8px;
             }
             .kill-feed {
-                top: 30px;
-                max-width: 100px;
+                top: 34px;
+                max-width: 110px;
             }
             .kill-msg {
                 font-size: 7px;
                 padding: 2px 6px;
             }
             .center-announcement .title {
-                font-size: 20px;
-                padding: 4px 10px;
+                font-size: 22px;
+                padding: 5px 12px;
             }
             .center-announcement .subtitle {
-                font-size: 10px;
+                font-size: 11px;
             }
             .game-over-box {
-                padding: 12px 16px;
-                max-width: 220px;
+                padding: 14px 16px;
+                max-width: 240px;
             }
             .game-over-box .title {
-                font-size: 22px;
+                font-size: 24px;
             }
             .game-over-box .stats {
-                padding: 5px;
+                padding: 6px;
                 gap: 3px;
             }
             .game-over-box .stat-item .value {
-                font-size: 16px;
+                font-size: 18px;
             }
             .game-over-box .restart-btn {
-                font-size: 11px;
+                font-size: 12px;
                 padding: 6px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .touch-controls {
+                height: 52px;
+                gap: 2px;
+                padding: 2px;
+            }
+            .touch-btn {
+                font-size: 14px;
+                border-radius: 5px;
+                min-height: 38px;
+            }
+            .touch-btn .sub-label {
+                font-size: 5px;
+            }
+            .touch-btn.shoot {
+                font-size: 12px;
+            }
+            .touch-btn.pickup {
+                font-size: 10px;
+                min-height: 18px;
+            }
+        }
+
+        @media (orientation: landscape) and (max-height: 500px) {
+            .game-wrapper {
+                padding: 3px 3px 0 3px;
+            }
+            .game-header {
+                padding: 1px 5px;
+                min-height: 20px;
+                margin-bottom: 1px;
+            }
+            .game-info span {
+                font-size: 6px;
+                padding: 1px 3px;
+            }
+            .health-bar {
+                width: 50px;
+            }
+            .health-fill {
+                height: 8px;
+            }
+            .health-text {
+                font-size: 4px;
+            }
+            #gameStatus {
+                font-size: 7px;
+            }
+
+            .touch-controls {
+                height: 46px;
+                gap: 3px;
+                padding: 2px 3px 3px 3px;
+            }
+            .touch-btn {
+                font-size: 14px;
+                border-radius: 5px;
+                min-height: 34px;
+            }
+            .touch-btn .sub-label {
+                font-size: 5px;
+            }
+            .touch-btn.shoot {
+                font-size: 12px;
+            }
+            .touch-btn.pickup {
+                font-size: 10px;
+                min-height: 18px;
+            }
+
+            .weapon-hud {
+                bottom: 6px;
+                padding: 2px 6px;
+                font-size: 7px;
+            }
+            .weapon-hud .weapon-icon {
+                font-size: 9px;
+            }
+            .pickup-indicator {
+                bottom: 28px;
+                font-size: 6px;
+                padding: 2px 6px;
+            }
+            .kill-feed {
+                top: 28px;
+                max-width: 90px;
+            }
+            .kill-msg {
+                font-size: 6px;
+                padding: 1px 5px;
+            }
+            .center-announcement .title {
+                font-size: 18px;
+                padding: 3px 8px;
+            }
+            .center-announcement .subtitle {
+                font-size: 9px;
+            }
+            .game-over-box {
+                padding: 10px 12px;
+                max-width: 180px;
+            }
+            .game-over-box .title {
+                font-size: 18px;
+            }
+            .game-over-box .stats {
+                padding: 4px;
+                gap: 2px;
+            }
+            .game-over-box .stat-item .value {
+                font-size: 14px;
+            }
+            .game-over-box .restart-btn {
+                font-size: 10px;
+                padding: 4px;
             }
         }
     </style>
@@ -886,7 +915,7 @@
             <div class="confetti-container" id="confettiContainer"></div>
         </div>
 
-        <!-- 5 BUTTONS – BIG & VISIBLE -->
+        <!-- 5 BUTTONS – NEAR GAME AREA -->
         <div class="touch-controls">
             <button class="touch-btn up" data-key="ArrowUp">
                 ▲
@@ -1210,8 +1239,8 @@
                 this.character = character || 'soldier';
                 this.x = x || 400;
                 this.y = y || 300;
-                this.width = 56; // BIG
-                this.height = 74; // BIG
+                this.width = 52;
+                this.height = 70;
                 this.health = 100;
                 this.maxHealth = 100;
                 this.direction = 'right';
@@ -1237,9 +1266,9 @@
                 if (this.isDead) {
                     ctx.globalAlpha = 0.3;
                     ctx.fillStyle = '#666';
-                    ctx.font = '14px Arial';
+                    ctx.font = '13px Arial';
                     ctx.textAlign = 'center';
-                    ctx.fillText('💀 Respawn...', this.x, this.y - 38);
+                    ctx.fillText('💀 Respawn...', this.x, this.y - 36);
                     ctx.globalAlpha = 1;
                     return;
                 }
@@ -1251,7 +1280,7 @@
                 ctx.shadowBlur = 0;
                 ctx.fillStyle = 'rgba(0,0,0,0.35)';
                 ctx.beginPath();
-                ctx.ellipse(this.x, this.y + this.height / 2 + 8, 28, 9, 0, 0, Math.PI * 2);
+                ctx.ellipse(this.x, this.y + this.height / 2 + 7, 26, 8, 0, 0, Math.PI * 2);
                 ctx.fill();
 
                 ctx.save();
@@ -1259,88 +1288,88 @@
                 if (this.direction === 'left') ctx.scale(-1, 1);
 
                 const bodyColor = this.hitFlash > 0 ? '#ff0000' : this.teamColor;
-                ctx.shadowBlur = this.hitFlash > 0 ? 25 : 8;
+                ctx.shadowBlur = this.hitFlash > 0 ? 22 : 7;
                 ctx.shadowColor = this.hitFlash > 0 ? '#ff0000' : 'rgba(0,0,0,0.3)';
 
-                // BODY – big
+                // BODY
                 ctx.fillStyle = bodyColor;
-                ctx.fillRect(-20, -10, 40, 36);
+                ctx.fillRect(-18, -8, 36, 34);
                 const darkColor = this.team === 'red' ? '#cc3333' : '#3366cc';
                 ctx.fillStyle = this.hitFlash > 0 ? '#ff3333' : darkColor;
-                ctx.fillRect(-15, -4, 30, 5);
-                ctx.fillRect(-15, 6, 30, 5);
-                ctx.fillRect(-15, 16, 30, 5);
+                ctx.fillRect(-13, -2, 26, 4);
+                ctx.fillRect(-13, 6, 26, 4);
+                ctx.fillRect(-13, 14, 26, 4);
 
-                // HEAD – big
-                ctx.shadowBlur = this.hitFlash > 0 ? 25 : 8;
+                // HEAD
+                ctx.shadowBlur = this.hitFlash > 0 ? 22 : 7;
                 ctx.fillStyle = this.hitFlash > 0 ? '#ff0000' : '#fd79a8';
                 ctx.beginPath();
-                ctx.arc(0, -22, 18, 0, Math.PI * 2);
+                ctx.arc(0, -20, 16, 0, Math.PI * 2);
                 ctx.fill();
                 // Helmet
                 ctx.fillStyle = this.hitFlash > 0 ? '#ff3333' : '#2d3436';
                 ctx.beginPath();
-                ctx.arc(0, -24, 19, 0, Math.PI * 2);
+                ctx.arc(0, -22, 17, 0, Math.PI * 2);
                 ctx.fill();
-                ctx.fillRect(-20, -29, 40, 5);
+                ctx.fillRect(-18, -27, 36, 4);
                 // Team letter
                 ctx.fillStyle = this.team === 'red' ? '#ff4444' : '#4488ff';
-                ctx.font = 'bold 13px Arial';
+                ctx.font = 'bold 12px Arial';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
-                ctx.fillText(this.team === 'red' ? 'R' : 'B', 0, -24);
+                ctx.fillText(this.team === 'red' ? 'R' : 'B', 0, -22);
 
-                // ARMS – big
-                ctx.shadowBlur = 8;
+                // ARMS
+                ctx.shadowBlur = 7;
                 ctx.fillStyle = this.hitFlash > 0 ? '#ff0000' : '#fd79a8';
                 if (this.isAttacking) {
                     const progress = 1 - (this.attackTimer / 20);
-                    const reach = 22 + progress * 38;
-                    ctx.fillRect(20, -3, reach, 12);
+                    const reach = 20 + progress * 34;
+                    ctx.fillRect(18, -2, reach, 10);
                     ctx.fillStyle = '#ffd93d';
-                    ctx.shadowBlur = 25;
+                    ctx.shadowBlur = 22;
                     ctx.shadowColor = '#ffd93d';
-                    ctx.fillRect(32, -8, 24 + progress * 16, 20);
+                    ctx.fillRect(28, -6, 20 + progress * 14, 18);
                 } else {
-                    ctx.fillRect(-28, 0, 12, 22);
-                    ctx.fillRect(16, 0, 12, 22);
+                    ctx.fillRect(-24, 0, 10, 20);
+                    ctx.fillRect(14, 0, 10, 20);
                 }
 
-                // GUN – big
+                // GUN
                 const weapon = WEAPONS[this.weapon] || WEAPONS.pistol;
-                ctx.shadowBlur = this.isShooting ? 25 : 8;
+                ctx.shadowBlur = this.isShooting ? 22 : 7;
                 ctx.shadowColor = this.isShooting ? weapon.color : 'rgba(0,0,0,0.3)';
                 ctx.fillStyle = '#1a1a2e';
-                ctx.fillRect(18, -6, 40, 10);
+                ctx.fillRect(16, -5, 36, 9);
                 ctx.fillStyle = '#2d3436';
-                ctx.fillRect(18 + 35, -7, 8, 12);
+                ctx.fillRect(16 + 32, -6, 7, 11);
                 ctx.fillStyle = '#2d3436';
-                ctx.fillRect(18, 3, 16, 12);
+                ctx.fillRect(16, 3, 14, 11);
                 ctx.fillStyle = '#4a4a4a';
-                ctx.fillRect(23, -3, 8, 5);
+                ctx.fillRect(20, -2, 7, 4);
 
-                // Muzzle flash – big
+                // Muzzle flash
                 if (this.isShooting && this.shootCooldown > 8) {
-                    ctx.shadowBlur = 50;
+                    ctx.shadowBlur = 45;
                     ctx.shadowColor = weapon.color;
                     ctx.fillStyle = '#ffd93d';
                     ctx.beginPath();
-                    ctx.arc(18 + 40 + 10, 0, 14 + Math.random() * 8, 0, Math.PI * 2);
+                    ctx.arc(16 + 36 + 8, 0, 12 + Math.random() * 7, 0, Math.PI * 2);
                     ctx.fill();
                     ctx.fillStyle = weapon.color;
                     ctx.beginPath();
-                    ctx.arc(18 + 40 + 12, 0, 10 + Math.random() * 6, 0, Math.PI * 2);
+                    ctx.arc(16 + 36 + 10, 0, 8 + Math.random() * 5, 0, Math.PI * 2);
                     ctx.fill();
                 }
 
-                // LEGS – big
-                ctx.shadowBlur = 8;
+                // LEGS
+                ctx.shadowBlur = 7;
                 ctx.fillStyle = '#2d3436';
-                ctx.fillRect(-18, 30, 16, 24);
-                ctx.fillRect(2, 30, 16, 24);
+                ctx.fillRect(-16, 28, 14, 22);
+                ctx.fillRect(2, 28, 14, 22);
                 ctx.fillStyle = '#1a1a2e';
-                ctx.fillRect(-19, 35, 17, 5);
-                ctx.fillRect(2, 35, 17, 5);
+                ctx.fillRect(-17, 32, 15, 4);
+                ctx.fillRect(2, 32, 15, 4);
 
                 ctx.shadowBlur = 0;
                 ctx.restore();
@@ -1348,40 +1377,40 @@
                 // NAME
                 ctx.shadowBlur = 0;
                 ctx.fillStyle = 'rgba(0,0,0,0.65)';
-                ctx.fillRect(x - 8, y - 42, this.width + 16, 18);
+                ctx.fillRect(x - 6, y - 38, this.width + 12, 16);
                 ctx.fillStyle = this.id === localPlayerId ? '#ffd93d' : '#fff';
-                ctx.font = 'bold 13px Arial';
+                ctx.font = 'bold 12px Arial';
                 ctx.textAlign = 'center';
-                ctx.fillText(this.name, this.x, y - 28);
+                ctx.fillText(this.name, this.x, y - 26);
 
                 // COMBO
                 if (this.comboCount > 1) {
                     ctx.fillStyle = '#ffd93d';
-                    ctx.font = 'bold 18px Arial';
+                    ctx.font = 'bold 16px Arial';
                     ctx.textAlign = 'center';
-                    ctx.shadowBlur = 20;
+                    ctx.shadowBlur = 18;
                     ctx.shadowColor = '#ffd93d';
-                    ctx.fillText(`${this.comboCount}x COMBO!`, this.x, y - 62);
+                    ctx.fillText(`${this.comboCount}x COMBO!`, this.x, y - 58);
                     ctx.shadowBlur = 0;
                 }
 
-                // HEALTH BAR – big
-                const hw = this.width + 16;
-                const hx = x - 8;
-                const hy = y - 62;
+                // HEALTH BAR
+                const hw = this.width + 12;
+                const hx = x - 6;
+                const hy = y - 58;
                 ctx.fillStyle = 'rgba(0,0,0,0.75)';
-                ctx.fillRect(hx, hy, hw, 8);
+                ctx.fillRect(hx, hy, hw, 7);
                 const hp = this.health / this.maxHealth;
                 ctx.fillStyle = hp > 0.5 ? '#6bcb77' : hp > 0.25 ? '#ffd93d' : '#ff6b6b';
-                ctx.fillRect(hx + 2, hy + 2, (hw - 4) * hp, 4);
+                ctx.fillRect(hx + 2, hy + 2, (hw - 4) * hp, 3);
 
                 // WEAPON ICON
                 ctx.fillStyle = 'rgba(0,0,0,0.5)';
-                ctx.fillRect(x + this.width / 2 - 12, y - 50, 24, 12);
+                ctx.fillRect(x + this.width / 2 - 10, y - 46, 20, 10);
                 ctx.fillStyle = '#fff';
-                ctx.font = '12px Arial';
+                ctx.font = '10px Arial';
                 ctx.textAlign = 'center';
-                ctx.fillText(weapon.icon, this.x, y - 40);
+                ctx.fillText(weapon.icon, this.x, y - 37);
             }
 
             update() {
@@ -1456,30 +1485,30 @@
         }
 
         // ============================================================
-        // PARTICLES – BIGGER
+        // PARTICLES
         // ============================================================
         class Particle {
             constructor(x, y, color, size, vx, vy, life) {
                 this.x = x;
                 this.y = y;
                 this.color = color;
-                this.size = size || 7;
-                this.vx = vx || (Math.random() - 0.5) * 8;
-                this.vy = vy || (Math.random() - 0.5) * 8 - 3;
-                this.life = life || 25;
+                this.size = size || 6;
+                this.vx = vx || (Math.random() - 0.5) * 7;
+                this.vy = vy || (Math.random() - 0.5) * 7 - 2;
+                this.life = life || 22;
                 this.maxLife = this.life;
             }
             update() {
                 this.x += this.vx;
                 this.y += this.vy;
-                this.vy += 0.15;
+                this.vy += 0.12;
                 this.life--;
                 this.size *= 0.97;
             }
             draw(ctx) {
                 const alpha = this.life / this.maxLife;
                 ctx.globalAlpha = alpha;
-                ctx.shadowBlur = 12;
+                ctx.shadowBlur = 10;
                 ctx.shadowColor = this.color;
                 ctx.fillStyle = this.color;
                 ctx.beginPath();
@@ -1659,19 +1688,19 @@
                 target.takeDamage(data.damage);
                 sound.playHit();
 
-                for (let i = 0; i < 20; i++) {
+                for (let i = 0; i < 18; i++) {
                     const angle = Math.random() * Math.PI * 2;
-                    const speed = 2 + Math.random() * 6;
+                    const speed = 2 + Math.random() * 5;
                     particles.push(new Particle(
                         data.x || target.x,
                         data.y || target.y,
                         ['#ff6b6b', '#ffd93d', '#ff9f43'][Math.floor(Math.random() * 3)],
-                        5 + Math.random() * 5,
+                        4 + Math.random() * 5,
                         Math.cos(angle) * speed,
                         Math.sin(angle) * speed - 2
                     ));
                 }
-                screenShake = 7;
+                screenShake = 6;
 
                 if (players[data.attackerId]) {
                     const attacker = players[data.attackerId];
@@ -1679,9 +1708,9 @@
                     if (attacker.comboCount > 1) {
                         comboTexts.push({
                             x: data.x || target.x,
-                            y: (data.y || target.y) - 50,
+                            y: (data.y || target.y) - 48,
                             text: `${attacker.comboCount}x COMBO!`,
-                            life: 45,
+                            life: 42,
                             color: '#ffd93d'
                         });
                     }
@@ -1971,7 +2000,7 @@
             for (const w of weapons) {
                 const dx = player.x - w.x;
                 const dy = player.y - w.y;
-                if (Math.sqrt(dx * dx + dy * dy) < 55) {
+                if (Math.sqrt(dx * dx + dy * dy) < 50) {
                     found = w;
                     break;
                 }
@@ -2013,28 +2042,28 @@
         }
 
         // ============================================================
-        // DRAW FUNCTIONS – BIGGER WEAPONS
+        // DRAW FUNCTIONS
         // ============================================================
         function drawWeapons(ctx) {
             for (const w of weaponsOnMap) {
                 const weapon = WEAPONS[w.type] || WEAPONS.pistol;
-                const grad = ctx.createRadialGradient(w.x, w.y, 0, w.x, w.y, 28);
+                const grad = ctx.createRadialGradient(w.x, w.y, 0, w.x, w.y, 26);
                 grad.addColorStop(0, weapon.color + '30');
                 grad.addColorStop(1, 'transparent');
                 ctx.fillStyle = grad;
                 ctx.beginPath();
-                ctx.arc(w.x, w.y, 28, 0, Math.PI * 2);
+                ctx.arc(w.x, w.y, 26, 0, Math.PI * 2);
                 ctx.fill();
                 ctx.fillStyle = 'rgba(0,0,0,0.6)';
                 ctx.beginPath();
-                ctx.arc(w.x, w.y, 20, 0, Math.PI * 2);
+                ctx.arc(w.x, w.y, 18, 0, Math.PI * 2);
                 ctx.fill();
                 ctx.strokeStyle = weapon.color;
-                ctx.lineWidth = 2.5;
+                ctx.lineWidth = 2;
                 ctx.beginPath();
-                ctx.arc(w.x, w.y, 20, 0, Math.PI * 2);
+                ctx.arc(w.x, w.y, 18, 0, Math.PI * 2);
                 ctx.stroke();
-                ctx.font = '26px Arial';
+                ctx.font = '24px Arial';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
                 ctx.fillStyle = '#fff';
@@ -2055,16 +2084,16 @@
             if (localPlayer && gameStatus === 'playing' && !gameOver && !localPlayer.isDead) {
                 let dx = 0,
                     dy = 0;
-                if (keys['ArrowUp']) dy = -4;
-                if (keys['ArrowDown']) dy = 4;
-                if (keys['ArrowLeft']) { dx = -4;
+                if (keys['ArrowUp']) dy = -3.8;
+                if (keys['ArrowDown']) dy = 3.8;
+                if (keys['ArrowLeft']) { dx = -3.8;
                     localPlayer.direction = 'left'; }
-                if (keys['ArrowRight']) { dx = 4;
+                if (keys['ArrowRight']) { dx = 3.8;
                     localPlayer.direction = 'right'; }
 
                 if (dx !== 0 || dy !== 0) {
-                    const newX = Math.max(28, Math.min(872, localPlayer.x + dx));
-                    const newY = Math.max(37, Math.min(563, localPlayer.y + dy));
+                    const newX = Math.max(26, Math.min(874, localPlayer.x + dx));
+                    const newY = Math.max(35, Math.min(565, localPlayer.y + dy));
                     localPlayer.x = newX;
                     localPlayer.y = newY;
                     socket.emit('player-move', { x: newX, y: newY, direction: localPlayer.direction });
@@ -2097,7 +2126,7 @@
             ctx.save();
 
             if (screenShake > 0.5) {
-                ctx.translate((Math.random() - 0.5) * screenShake * 2.5, (Math.random() - 0.5) * screenShake * 2.5);
+                ctx.translate((Math.random() - 0.5) * screenShake * 2, (Math.random() - 0.5) * screenShake * 2);
             }
 
             const grad = ctx.createLinearGradient(0, 0, 0, 600);
@@ -2110,22 +2139,22 @@
             ctx.fillStyle = 'rgba(255,255,255,0.03)';
             ctx.fillRect(0, 550, 900, 50);
 
-            ctx.fillStyle = 'rgba(255,0,0,0.05)';
+            ctx.fillStyle = 'rgba(255,0,0,0.04)';
             ctx.fillRect(0, 0, 450, 600);
-            ctx.fillStyle = 'rgba(0,100,255,0.05)';
+            ctx.fillStyle = 'rgba(0,100,255,0.04)';
             ctx.fillRect(450, 0, 450, 600);
 
-            ctx.font = '16px Arial';
+            ctx.font = '14px Arial';
             ctx.textAlign = 'center';
-            ctx.fillStyle = 'rgba(255,0,0,0.15)';
-            ctx.fillText('🔴 RED TEAM', 225, 35);
-            ctx.fillStyle = 'rgba(0,100,255,0.15)';
-            ctx.fillText('🔵 BLUE TEAM', 675, 35);
+            ctx.fillStyle = 'rgba(255,0,0,0.12)';
+            ctx.fillText('🔴 RED TEAM', 225, 30);
+            ctx.fillStyle = 'rgba(0,100,255,0.12)';
+            ctx.fillText('🔵 BLUE TEAM', 675, 30);
 
-            ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+            ctx.strokeStyle = 'rgba(255,255,255,0.07)';
             ctx.lineWidth = 2;
             ctx.beginPath();
-            ctx.arc(450, 300, 220, 0, Math.PI * 2);
+            ctx.arc(450, 300, 210, 0, Math.PI * 2);
             ctx.stroke();
 
             ctx.strokeStyle = 'rgba(255,255,255,0.03)';
@@ -2143,7 +2172,7 @@
                 ctx.stroke();
             }
 
-            ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+            ctx.strokeStyle = 'rgba(255,255,255,0.07)';
             ctx.lineWidth = 1.5;
             ctx.setLineDash([8, 8]);
             ctx.beginPath();
@@ -2152,7 +2181,7 @@
             ctx.stroke();
             ctx.setLineDash([]);
 
-            // Projectiles – bigger
+            // Projectiles
             projectiles.forEach(p => {
                 if (p.trail) {
                     p.trail.forEach((pos, i) => {
@@ -2165,7 +2194,7 @@
                     });
                 }
                 ctx.globalAlpha = 1;
-                ctx.shadowBlur = 25;
+                ctx.shadowBlur = 22;
                 ctx.shadowColor = p.color || '#ffd93d';
                 const grad2 = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
                 grad2.addColorStop(0, '#ffffff');
@@ -2185,11 +2214,11 @@
             sorted.forEach(p => p.draw(ctx));
 
             comboTexts.forEach(t => {
-                ctx.globalAlpha = t.life / 45;
+                ctx.globalAlpha = t.life / 42;
                 ctx.fillStyle = t.color;
-                ctx.font = 'bold 20px Arial';
+                ctx.font = 'bold 18px Arial';
                 ctx.textAlign = 'center';
-                ctx.shadowBlur = 20;
+                ctx.shadowBlur = 18;
                 ctx.shadowColor = t.color;
                 ctx.fillText(t.text, t.x, t.y);
                 ctx.shadowBlur = 0;
@@ -2254,10 +2283,10 @@
         resizeCanvas();
         gameLoop();
 
-        console.log('🎮 LARGE SOLDIERS LOADED!');
+        console.log('🎮 LARGE FIGHT AREA + BUTTONS NEAR GAME!');
         console.log('🔴 RED TEAM vs 🔵 BLUE TEAM');
         console.log('⬆⬇⬅➡ Use 5 big buttons to move and shoot');
-        console.log('✅ Everything is BIG and clearly visible!');
+        console.log('✅ Larger fighting area, buttons close to game!');
     </script>
 </body>
 </html>
