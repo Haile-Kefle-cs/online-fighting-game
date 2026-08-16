@@ -1,0 +1,44 @@
+{
+  "characters": [
+    {
+      "id": "warrior",
+      "name": "Warrior",
+      "description": "A powerful melee fighter with high health and damage",
+      "health": 120,
+      "speed": 3,
+      "attackDamage": 15,
+      "attackRange": 80,
+      "abilities": ["Power Strike", "Shield Bash"]
+    },
+    {
+      "id": "ninja",
+      "name": "Ninja",
+      "description": "A swift and agile fighter with quick attacks",
+      "health": 80,
+      "speed": 4,
+      "attackDamage": 10,
+      "attackRange": 70,
+      "abilities": ["Shuriken Throw", "Shadow Step"]
+    },
+    {
+      "id": "wizard",
+      "name": "Wizard",
+      "description": "A magical fighter with powerful ranged attacks",
+      "health": 90,
+      "speed": 2.5,
+      "attackDamage": 20,
+      "attackRange": 120,
+      "abilities": ["Fireball", "Teleport"]
+    },
+    {
+      "id": "knight",
+      "name": "Knight",
+      "description": "A heavily armored fighter with balanced stats",
+      "health": 130,
+      "speed": 2.8,
+      "attackDamage": 12,
+      "attackRange": 85,
+      "abilities": ["Sword Slash", "Shield Block"]
+    }
+  ]
+}
