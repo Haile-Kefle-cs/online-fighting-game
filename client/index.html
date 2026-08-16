@@ -43,6 +43,7 @@
             display: flex;
             gap: 10px;
             align-items: center;
+            flex-wrap: wrap;
         }
         .lang-toggle {
             display: flex;
@@ -491,7 +492,7 @@
             background: rgba(10,10,30,0.97);
             border-radius: 20px;
             border: 2px solid rgba(255,215,0,0.15);
-            max-width: 700px;
+            max-width: 750px;
             width: 100%;
             max-height: 85vh;
             overflow-y: auto;
@@ -544,16 +545,17 @@
             margin-bottom: 18px;
         }
         .modal-body .section h3 {
-            color: #6bcb77;
             font-size: 1.1em;
             margin-bottom: 8px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
+        .modal-body .section h3.red { color: #ff6b6b; }
         .modal-body .section h3.blue { color: #4facfe; }
         .modal-body .section h3.gold { color: #ffd93d; }
-        .modal-body .section h3.red { color: #ff6b6b; }
+        .modal-body .section h3.green { color: #6bcb77; }
+        .modal-body .section h3.purple { color: #a29bfe; }
         .modal-body .section p {
             color: #aaa;
             line-height: 1.7;
@@ -593,26 +595,79 @@
         .modal-body .section ul li .team-red { color: #ff6b6b; font-weight: bold; }
         .modal-body .section ul li .team-blue { color: #4facfe; font-weight: bold; }
         
-        .modal-body .rules-grid {
+        .controls-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            margin: 8px 0;
+        }
+        .controls-grid .ctrl-item {
+            background: rgba(255,255,255,0.04);
+            padding: 8px 12px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .controls-grid .ctrl-item .btn-preview {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 14px;
+            min-width: 50px;
+            text-align: center;
+        }
+        .controls-grid .ctrl-item .btn-preview.up { background: linear-gradient(135deg, #4facfe, #2d7dd6); color: #fff; }
+        .controls-grid .ctrl-item .btn-preview.down { background: linear-gradient(135deg, #4facfe, #2d7dd6); color: #fff; }
+        .controls-grid .ctrl-item .btn-preview.left { background: linear-gradient(135deg, #4facfe, #2d7dd6); color: #fff; }
+        .controls-grid .ctrl-item .btn-preview.right { background: linear-gradient(135deg, #4facfe, #2d7dd6); color: #fff; }
+        .controls-grid .ctrl-item .btn-preview.shoot { background: linear-gradient(135deg, #ff6b35, #e53e00); color: #fff; }
+        .controls-grid .ctrl-item .btn-preview.pickup { background: linear-gradient(135deg, #ffd93d, #f0a500); color: #1a1a2e; }
+        .controls-grid .ctrl-item .ctrl-label { font-size: 12px; color: #aaa; }
+        .controls-grid .ctrl-item .ctrl-key { color: #ffd93d; font-family: monospace; font-size: 11px; background: rgba(255,255,255,0.05); padding: 1px 6px; border-radius: 3px; }
+        
+        .weapon-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            margin: 8px 0;
+        }
+        .weapon-grid .weapon-item {
+            background: rgba(255,255,255,0.04);
+            padding: 10px 8px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s;
+        }
+        .weapon-grid .weapon-item:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,215,0,0.15);
+        }
+        .weapon-grid .weapon-item .w-icon { font-size: 24px; display: block; }
+        .weapon-grid .weapon-item .w-name { font-size: 12px; color: #ffd93d; font-weight: bold; margin-top: 3px; }
+        .weapon-grid .weapon-item .w-desc { font-size: 10px; color: #888; margin-top: 2px; }
+        
+        .team-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
-            margin: 10px 0;
+            margin: 8px 0;
         }
-        .modal-body .rules-grid .rule-item {
-            background: rgba(255,255,255,0.03);
-            padding: 12px 15px;
+        .team-grid .team-item {
+            padding: 12px;
             border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.05);
             text-align: center;
-            transition: all 0.3s;
+            border: 2px solid rgba(255,255,255,0.05);
         }
-        .modal-body .rules-grid .rule-item:hover {
-            background: rgba(255,255,255,0.06);
-            border-color: rgba(255,215,0,0.1);
-        }
-        .modal-body .rules-grid .rule-item .icon { font-size: 28px; display: block; margin-bottom: 4px; }
-        .modal-body .rules-grid .rule-item .text { font-size: 12px; color: #aaa; }
+        .team-grid .team-item.red { border-color: rgba(255,0,0,0.2); background: rgba(255,0,0,0.05); }
+        .team-grid .team-item.blue { border-color: rgba(0,100,255,0.2); background: rgba(0,100,255,0.05); }
+        .team-grid .team-item .t-icon { font-size: 28px; display: block; }
+        .team-grid .team-item .t-name { font-size: 14px; font-weight: bold; margin-top: 3px; }
+        .team-grid .team-item .t-name.red { color: #ff6b6b; }
+        .team-grid .team-item .t-name.blue { color: #4facfe; }
         
         .modal-footer {
             margin-top: 20px;
@@ -698,7 +753,9 @@
             .tab-content { padding: 18px 16px; }
             .modal-content { padding: 20px; }
             .modal-header h2 { font-size: 1.3em; }
-            .modal-body .rules-grid { grid-template-columns: 1fr; }
+            .controls-grid { grid-template-columns: 1fr; }
+            .weapon-grid { grid-template-columns: 1fr 1fr; }
+            .team-grid { grid-template-columns: 1fr; }
             .room-code-display .code { font-size: 22px; padding: 4px 12px; letter-spacing: 2px; }
             .footer { font-size: 11px; }
         }
@@ -718,6 +775,9 @@
             .modal-header h2 { font-size: 1.1em; }
             .modal-close { width: 34px; height: 34px; font-size: 18px; }
             .modal-body .section ul li { font-size: 13px; }
+            .weapon-grid { grid-template-columns: 1fr; }
+            .controls-grid .ctrl-item { padding: 6px 10px; }
+            .controls-grid .ctrl-item .btn-preview { font-size: 12px; min-width: 40px; padding: 3px 8px; }
             .room-code-display .code { font-size: 18px; padding: 4px 10px; letter-spacing: 1px; }
             .toast { font-size: 12px; padding: 8px 16px; bottom: 20px; }
         }
@@ -850,54 +910,130 @@
                 <!-- English Version -->
                 <div id="modalEn">
                     <div class="section">
-                        <h3>🎯 Game Objective</h3>
-                        <p>Eliminate all enemy players and be the last soldier standing! Work with your team to defeat the opposing team.</p>
+                        <h3 class="gold">🎯 Game Objective</h3>
+                        <p>Eliminate all enemy players and be the last soldier standing! Work with your <span class="team-red">🔴 Red Team</span> or <span class="team-blue">🔵 Blue Team</span> to defeat the opposing team. The game ends when only one team has surviving players.</p>
                     </div>
                     
                     <div class="section">
-                        <h3 class="blue">🎮 Controls</h3>
-                        <ul>
-                            <li><span class="key">⬆ ⬇ ⬅ ➡</span> or <span class="key">W A S D</span> - Move your soldier</li>
-                            <li><span class="key">Space</span> or <span class="key">Click</span> - Shoot your weapon</li>
-                            <li><span class="key">J</span> - Light Attack (melee)</li>
-                            <li><span class="key">K</span> - Heavy Attack (melee)</li>
-                            <li><span class="key">L</span> - Special Attack</li>
-                            <li><span class="key">E</span> - Pickup weapon from the ground</li>
-                            <li><span class="key">Tap/Click</span> on screen to aim and shoot</li>
-                        </ul>
+                        <h3 class="blue">🎮 5-Button Controls</h3>
+                        <div class="controls-grid">
+                            <div class="ctrl-item">
+                                <span class="btn-preview up">▲</span>
+                                <span class="ctrl-label">Move Up</span>
+                                <span class="ctrl-key">UP Button</span>
+                            </div>
+                            <div class="ctrl-item">
+                                <span class="btn-preview down">▼</span>
+                                <span class="ctrl-label">Move Down</span>
+                                <span class="ctrl-key">DOWN Button</span>
+                            </div>
+                            <div class="ctrl-item">
+                                <span class="btn-preview left">◄</span>
+                                <span class="ctrl-label">Move Left</span>
+                                <span class="ctrl-key">LEFT Button</span>
+                            </div>
+                            <div class="ctrl-item">
+                                <span class="btn-preview right">►</span>
+                                <span class="ctrl-label">Move Right</span>
+                                <span class="ctrl-key">RIGHT Button</span>
+                            </div>
+                            <div class="ctrl-item">
+                                <span class="btn-preview shoot">🔫</span>
+                                <span class="ctrl-label">Shoot Weapon</span>
+                                <span class="ctrl-key">SHOOT Button</span>
+                            </div>
+                            <div class="ctrl-item">
+                                <span class="btn-preview pickup">📦</span>
+                                <span class="ctrl-label">Pickup Weapon</span>
+                                <span class="ctrl-key">PICKUP Button</span>
+                            </div>
+                        </div>
+                        <p style="font-size:13px;color:#888;margin-top:6px;text-align:center;">📱 All controls are on-screen buttons - no keyboard needed!</p>
                     </div>
                     
                     <div class="section">
                         <h3 class="gold">🔫 Weapons</h3>
-                        <ul>
-                            <li><span class="key">🔫 Pistol</span> - Starting weapon, balanced damage</li>
-                            <li><span class="key">🔫 Rifle</span> - Medium damage, good range</li>
-                            <li><span class="key">💥 Shotgun</span> - High damage, short range</li>
-                            <li><span class="key">🎯 Sniper</span> - Very high damage, long range</li>
-                            <li><span class="key">🚀 Rocket</span> - Massive damage, explosive</li>
-                            <li><span class="key">⚡ Laser</span> - Fast fire rate, consistent damage</li>
-                        </ul>
+                        <div class="weapon-grid">
+                            <div class="weapon-item">
+                                <span class="w-icon">🔫</span>
+                                <span class="w-name">Pistol</span>
+                                <span class="w-desc">⚔️ 12 dmg • Starter</span>
+                            </div>
+                            <div class="weapon-item">
+                                <span class="w-icon">🔫</span>
+                                <span class="w-name">Rifle</span>
+                                <span class="w-desc">⚔️ 18 dmg • Good range</span>
+                            </div>
+                            <div class="weapon-item">
+                                <span class="w-icon">💥</span>
+                                <span class="w-name">Shotgun</span>
+                                <span class="w-desc">⚔️ 25 dmg • Short range</span>
+                            </div>
+                            <div class="weapon-item">
+                                <span class="w-icon">🎯</span>
+                                <span class="w-name">Sniper</span>
+                                <span class="w-desc">⚔️ 40 dmg • Long range</span>
+                            </div>
+                            <div class="weapon-item">
+                                <span class="w-icon">🚀</span>
+                                <span class="w-name">Rocket</span>
+                                <span class="w-desc">⚔️ 50 dmg • Explosive</span>
+                            </div>
+                            <div class="weapon-item">
+                                <span class="w-icon">⚡</span>
+                                <span class="w-name">Laser</span>
+                                <span class="w-desc">⚔️ 15 dmg • Fast fire</span>
+                            </div>
+                        </div>
+                        <p style="font-size:12px;color:#888;margin-top:6px;">📦 Walk over weapons on the map and press <span class="key">PICKUP</span> to pick them up!</p>
                     </div>
                     
                     <div class="section">
                         <h3 class="red">👥 Teams</h3>
+                        <div class="team-grid">
+                            <div class="team-item red">
+                                <span class="t-icon">🔴</span>
+                                <span class="t-name red">Red Team</span>
+                                <span style="font-size:12px;color:#ff6b6b;">Fight for the red side</span>
+                            </div>
+                            <div class="team-item blue">
+                                <span class="t-icon">🔵</span>
+                                <span class="t-name blue">Blue Team</span>
+                                <span style="font-size:12px;color:#4facfe;">Fight for the blue side</span>
+                            </div>
+                        </div>
                         <ul>
-                            <li><span class="team-red">🔴 Red Team</span> - Fight for the red side</li>
-                            <li><span class="team-blue">🔵 Blue Team</span> - Fight for the blue side</li>
-                            <li>Teams are automatically balanced when players join</li>
-                            <li>You cannot damage your own team members</li>
+                            <li>Teams are <strong>automatically balanced</strong> when players join</li>
+                            <li>You <strong>cannot damage</strong> your own team members</li>
+                            <li>Team color is shown on your soldier's body and helmet</li>
+                            <li>Work together with your team to defeat the enemy!</li>
                         </ul>
                     </div>
                     
                     <div class="section">
-                        <h3 class="gold">💡 Tips & Strategy</h3>
+                        <h3 class="green">💡 Tips & Strategy</h3>
                         <ul>
-                            <li>💪 Build combos by hitting enemies consecutively for bonus damage</li>
-                            <li>🔫 Pick up weapons from the map for better firepower</li>
-                            <li>🛡️ Use melee attacks when enemies are close</li>
-                            <li>🎯 Aim carefully with sniper and rocket launcher</li>
-                            <li>👥 Stick with your team for better survival</li>
-                            <li>📱 Mobile users: Use the on-screen touch controls</li>
+                            <li>💪 <strong>Build combos</strong> by hitting enemies consecutively for bonus damage</li>
+                            <li>🔫 <strong>Pick up weapons</strong> from the map for better firepower</li>
+                            <li>🛡️ Use <strong>melee attacks</strong> when enemies are close</li>
+                            <li>🎯 <strong>Aim carefully</strong> with sniper and rocket launcher</li>
+                            <li>👥 <strong>Stick with your team</strong> for better survival</li>
+                            <li>📱 <strong>Mobile users</strong>: Use the 5 on-screen buttons</li>
+                            <li>🔄 When you die, you <strong>respawn after 3 seconds</strong></li>
+                            <li>🏆 The game ends when <strong>one team eliminates the other</strong></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="purple">⚡ Quick Guide</h3>
+                        <ul>
+                            <li>1️⃣ <strong>Create or Join</strong> a room</li>
+                            <li>2️⃣ <strong>Wait</strong> for at least 2 players</li>
+                            <li>3️⃣ <strong>Game starts</strong> automatically!</li>
+                            <li>4️⃣ Use <strong>arrows</strong> (▲ ▼ ◄ ►) to move</li>
+                            <li>5️⃣ Press <strong>SHOOT</strong> (🔫) to fire your weapon</li>
+                            <li>6️⃣ Walk over <strong>weapons</strong> and press <strong>PICKUP</strong> (📦)</li>
+                            <li>7️⃣ <strong>Eliminate</strong> the enemy team to win!</li>
                         </ul>
                     </div>
                 </div>
@@ -905,54 +1041,105 @@
                 <!-- Amharic Version -->
                 <div id="modalAm" style="display:none;">
                     <div class="section">
-                        <h3>🎯 የጨዋታ ዓላማ</h3>
+                        <h3 class="gold">🎯 የጨዋታ ዓላማ</h3>
                         <p>ሁሉንም የተቃዋሚ ተጫዋቾች ያስወግዱ እና የመጨረሻው ወታደር ይሁኑ! ከቡድንዎ ጋር በመሆን የተቃዋሚ ቡድንን ያሸንፉ።</p>
                     </div>
                     
                     <div class="section">
-                        <h3 class="blue">🎮 መቆጣጠሪያዎች</h3>
-                        <ul>
-                            <li><span class="key">⬆ ⬇ ⬅ ➡</span> ወይም <span class="key">W A S D</span> - መንቀሳቀስ</li>
-                            <li><span class="key">Space</span> ወይም <span class="key">መጫን</span> - መተኮስ</li>
-                            <li><span class="key">J</span> - ቀላል ጥቃት</li>
-                            <li><span class="key">K</span> - ከባድ ጥቃት</li>
-                            <li><span class="key">L</span> - ልዩ ጥቃት</li>
-                            <li><span class="key">E</span> - መሳሪያ ማንሳት</li>
-                            <li>ስክሪኑን መጫን - ማነጣጠር እና መተኮስ</li>
-                        </ul>
+                        <h3 class="blue">🎮 5-ቁልፍ መቆጣጠሪያዎች</h3>
+                        <div class="controls-grid">
+                            <div class="ctrl-item">
+                                <span class="btn-preview up">▲</span>
+                                <span class="ctrl-label">ወደ ላይ</span>
+                                <span class="ctrl-key">UP</span>
+                            </div>
+                            <div class="ctrl-item">
+                                <span class="btn-preview down">▼</span>
+                                <span class="ctrl-label">ወደ ታች</span>
+                                <span class="ctrl-key">DOWN</span>
+                            </div>
+                            <div class="ctrl-item">
+                                <span class="btn-preview left">◄</span>
+                                <span class="ctrl-label">ወደ ግራ</span>
+                                <span class="ctrl-key">LEFT</span>
+                            </div>
+                            <div class="ctrl-item">
+                                <span class="btn-preview right">►</span>
+                                <span class="ctrl-label">ወደ ቀኝ</span>
+                                <span class="ctrl-key">RIGHT</span>
+                            </div>
+                            <div class="ctrl-item">
+                                <span class="btn-preview shoot">🔫</span>
+                                <span class="ctrl-label">መተኮስ</span>
+                                <span class="ctrl-key">SHOOT</span>
+                            </div>
+                            <div class="ctrl-item">
+                                <span class="btn-preview pickup">📦</span>
+                                <span class="ctrl-label">መሳሪያ ማንሳት</span>
+                                <span class="ctrl-key">PICKUP</span>
+                            </div>
+                        </div>
+                        <p style="font-size:13px;color:#888;margin-top:6px;text-align:center;">📱 ሁሉም መቆጣጠሪያዎች በስክሪን ላይ ናቸው - ቁልፍ ሰሌዳ አያስፈልግም!</p>
                     </div>
                     
                     <div class="section">
                         <h3 class="gold">🔫 መሳሪያዎች</h3>
-                        <ul>
-                            <li><span class="key">🔫 ፒስቶል</span> - መነሻ መሳሪያ</li>
-                            <li><span class="key">🔫 ራይፍል</span> - መካከለኛ ጉዳት</li>
-                            <li><span class="key">💥 ሾትገን</span> - ከፍተኛ ጉዳት</li>
-                            <li><span class="key">🎯 ስናይፐር</span> - ከፍተኛ ጉዳት</li>
-                            <li><span class="key">🚀 ሮኬት</span> - ግዙፍ ጉዳት</li>
-                            <li><span class="key">⚡ ሌዘር</span> - ፈጣን መተኮስ</li>
-                        </ul>
+                        <div class="weapon-grid">
+                            <div class="weapon-item"><span class="w-icon">🔫</span><span class="w-name">ፒስቶል</span><span class="w-desc">⚔️ 12 ጉዳት</span></div>
+                            <div class="weapon-item"><span class="w-icon">🔫</span><span class="w-name">ራይፍል</span><span class="w-desc">⚔️ 18 ጉዳት</span></div>
+                            <div class="weapon-item"><span class="w-icon">💥</span><span class="w-name">ሾትገን</span><span class="w-desc">⚔️ 25 ጉዳት</span></div>
+                            <div class="weapon-item"><span class="w-icon">🎯</span><span class="w-name">ስናይፐር</span><span class="w-desc">⚔️ 40 ጉዳት</span></div>
+                            <div class="weapon-item"><span class="w-icon">🚀</span><span class="w-name">ሮኬት</span><span class="w-desc">⚔️ 50 ጉዳት</span></div>
+                            <div class="weapon-item"><span class="w-icon">⚡</span><span class="w-name">ሌዘር</span><span class="w-desc">⚔️ 15 ጉዳት</span></div>
+                        </div>
+                        <p style="font-size:12px;color:#888;margin-top:6px;">📦 መሳሪያዎችን ከመሬት ላይ ይምረጡ!</p>
                     </div>
                     
                     <div class="section">
                         <h3 class="red">👥 ቡድኖች</h3>
+                        <div class="team-grid">
+                            <div class="team-item red">
+                                <span class="t-icon">🔴</span>
+                                <span class="t-name red">ቀይ ቡድን</span>
+                                <span style="font-size:12px;color:#ff6b6b;">ለቀይ ቡድን ይዋጉ</span>
+                            </div>
+                            <div class="team-item blue">
+                                <span class="t-icon">🔵</span>
+                                <span class="t-name blue">ሰማያዊ ቡድን</span>
+                                <span style="font-size:12px;color:#4facfe;">ለሰማያዊ ቡድን ይዋጉ</span>
+                            </div>
+                        </div>
                         <ul>
-                            <li><span class="team-red">🔴 ቀይ ቡድን</span> - ለቀይ ቡድን ይዋጉ</li>
-                            <li><span class="team-blue">🔵 ሰማያዊ ቡድን</span> - ለሰማያዊ ቡድን ይዋጉ</li>
                             <li>ቡድኖች በራስ-ሰር ይመደባሉ</li>
                             <li>የራስዎን ቡድን ማጥቃት አይችሉም</li>
+                            <li>የቡድን ቀለም በወታደርዎ ላይ ይታያል</li>
+                            <li>ከቡድንዎ ጋር በመሆን ይዋጉ!</li>
                         </ul>
                     </div>
                     
                     <div class="section">
-                        <h3 class="gold">💡 ምክሮች</h3>
+                        <h3 class="green">💡 ምክሮች</h3>
                         <ul>
                             <li>💪 ለተጨማሪ ጉዳት ኮምቦዎችን ይገንቡ</li>
                             <li>🔫 መሳሪያዎችን ከመሬት ላይ ይምረጡ</li>
-                            <li>🛡️ ተቃዋሚዎች ሲቃረቡ የጥቃት ቁልፎችን ይጠቀሙ</li>
+                            <li>🛡️ ተቃዋሚዎች ሲቃረቡ ጥቃት ይሰንዝሩ</li>
                             <li>🎯 በስናይፐር እና ሮኬት በጥንቃቄ ያነጣጥሩ</li>
-                            <li>👥 ለተሻለ ህልውና ከቡድንዎ ጋር ይቆዩ</li>
+                            <li>👥 ከቡድንዎ ጋር ይቆዩ</li>
                             <li>📱 በሞባይል ላይ የስክሪን ቁልፎችን ይጠቀሙ</li>
+                            <li>🔄 ሲሞቱ ከ3 ሰከንድ በኋላ ይነሳሉ</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="purple">⚡ ፈጣን መመሪያ</h3>
+                        <ul>
+                            <li>1️⃣ ክፍል ይፍጠሩ ወይም ይቀላቀሉ</li>
+                            <li>2️⃣ ቢያንስ 2 ተጫዋቾች ይጠብቁ</li>
+                            <li>3️⃣ ጨዋታው በራስ-ሰር ይጀምራል!</li>
+                            <li>4️⃣ ለመንቀሳቀስ ቀስቶችን (▲ ▼ ◄ ►) ይጠቀሙ</li>
+                            <li>5️⃣ ለመተኮስ SHOOT (🔫) ን ይጫኑ</li>
+                            <li>6️⃣ መሳሪያዎችን ለማንሳት PICKUP (📦) ን ይጫኑ</li>
+                            <li>7️⃣ የተቃዋሚ ቡድንን ያስወግዱ!</li>
                         </ul>
                     </div>
                 </div>
@@ -1243,7 +1430,6 @@
             const status = document.getElementById('status');
             const t = currentLang === 'am' ? { nameRequired: '❌ እባክዎ ስምዎን ያስገቡ' } : { nameRequired: '❌ Please enter your name' };
             
-            // Validate name
             if (!playerName) {
                 document.getElementById('playerName').classList.add('error');
                 status.textContent = t.nameRequired;
@@ -1267,18 +1453,15 @@
             status.textContent = t.created + data.roomId + ` (${data.maxPlayers} players)`;
             status.className = 'status-msg success show';
             
-            // Show room code
             currentRoomCode = data.roomId;
             document.getElementById('roomCodeDisplay').textContent = data.roomId;
             document.getElementById('roomCodeContainer').classList.add('show');
             document.getElementById('createBadge').style.display = 'inline';
             
-            // Auto copy
             setTimeout(copyRoomCode, 500);
             
             localStorage.setItem('playerName', data.player.name);
             
-            // Redirect after 3 seconds
             setTimeout(() => {
                 window.location.href = `/game?roomId=${data.roomId}`;
             }, 3000);
@@ -1300,7 +1483,6 @@
                 codeRequired: '❌ Please enter a room code'
             };
             
-            // Validate name
             if (!playerName) {
                 document.getElementById('joinPlayerName').classList.add('error');
                 status.textContent = t.nameRequired;
@@ -1312,7 +1494,6 @@
             }
             document.getElementById('joinPlayerName').classList.remove('error');
             
-            // Validate room code
             if (!roomId) {
                 document.getElementById('roomCodeInput').classList.add('error');
                 status.textContent = t.codeRequired;
@@ -1343,7 +1524,6 @@
                 noRooms: '❌ No rooms available'
             };
             
-            // Validate name
             if (!playerName) {
                 document.getElementById('joinPlayerName').classList.add('error');
                 status.textContent = t.nameRequired;
@@ -1472,14 +1652,12 @@
         modalCloseBtn.addEventListener('click', closeModal);
         modalCloseBtn2.addEventListener('click', closeModal);
         
-        // Close modal on overlay click
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
                 closeModal();
             }
         });
         
-        // Close modal on Escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && modal.classList.contains('show')) {
                 closeModal();
@@ -1500,7 +1678,6 @@
         document.getElementById('modalAm').style.display = 'none';
         updateMenuText('en');
         
-        // Focus on first input
         setTimeout(() => {
             document.getElementById('playerName').focus();
         }, 500);
@@ -1509,6 +1686,7 @@
         console.log('📖 Click "How to Play" to see game rules');
         console.log('👤 Name is required to create or join a room');
         console.log('🔴🔵 Team battle - Red vs Blue!');
+        console.log('📱 5-button controls on mobile!');
         console.log('📋 Developed by Haile © 2026');
     </script>
 </body>
